@@ -615,7 +615,9 @@ def cyk_for_2nf(gram, word):
         #     table[i][i].append(alcancaveis)
         for state in states:
             for alcancaveis in gram.reachableFromWithSymbol(state, word[i]):
-                table[i][i].append(alcancaveis)
+                for rul in gram.rules_dict[alcancaveis]:
+                    if alcancaveis not in table[i][i]:
+                        table[i][i].append(alcancaveis)
                 # states.append(alcancaveis)
 
 
@@ -627,31 +629,41 @@ def cyk_for_2nf(gram, word):
             j = i + l
             for k in range(i, j):
                 for rule in gram.rules_dict:
-                    for rul in gram.reachableFrom(rule):
-                        tqdmProgress.update(1)
-                        if rul == "λ":
-                            continue
-                        if len(rul) == 2:
-                            for a in table[i][k]:
-                                for b in table[k+1][j]:
-                                    if rul == a + b:
-                                        if rul not in table[i][j]:
-                                            table[i][j].append(rul)
+                    for rul2 in gram.reachableFrom(rule):
+                        for rul in gram.rules_dict[rul2]:
+                            tqdmProgress.update(1)
 
-                        if len(rul) == 1:
-                            for a in table[i][k]:
-                                if rul == a:
-                                    if rul not in table[i][j]:
-                                        table[i][j].append(rul)
+                            if len (rul) == 2:
+                                for a in table[i][k]:
+                                    for b in table[k+1][j]:
+                                        if b in rul and a in rul:
+                                            print("rul: {} a: {} b: {}".format(rul, a, b))
 
+                                            if rule not in table[i][j]:
+                                                table[i][j].append(rule)
 
+                            elif len(rul) == 1:
+                                for a in table[i][k]:
+                                    for b in table[k+1][j]:
+                                        if b in rul and a in rul:
+                                            print("rul: {} a: {} b: {}".format(rul, a, b))
+
+                                            if rule not in table[i][j]:
+                                                table[i][j].append(rule)
+                       
 
 
     tqdmProgress.set_description_str("`{}` aceita? {}".format(word, gram.start in table[0][n-1]))
     tqdmProgress.close()
 
 
-
+    print("")
+    print("start: " +gram.start)
+    # table[0][n-1] = "kk"
+    printTable(table)
+    print(gram.start + " in table[0][n-1]: " + str(gram.start in table[0][n-1]))
+    print("table[0][n-1]: "+str(table[0][n-1]))
+    print("")
 
     return gram.start in table[0][n-1]
 
@@ -660,7 +672,7 @@ def printTable(table):
     for i in range(len(table)):
         for j in range(len(table[i])):
             #print with width 5
-            print("{:20}".format(str(table[i][j])), end=" ")
+            print("{:30}".format(str(table[i][j])), end=" ")
            
         print("")
 
