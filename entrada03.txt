@@ -10,29 +10,4 @@ ENTRADAS
 1110
 0000000
 0101010101
-λ
 FIM
-
-CYK: 0 interations [00:00, ? interations/s]
-A palavra 1 é gerada pela gramática - Tempo: 0.009531259536743164s
-
-CYK: 0 interations [00:00, ? interations/s]
-A palavra 0 é gerada pela gramática - Tempo: 0.0004038810729980469s
-
-CYK: 100%|██████████████████████████████████████████████| 7/7 [00:00<00:00, 413522.93 interations/s]
-A palavra 11 é gerada pela gramática - Tempo: 0.0001766681671142578s
-
-CYK: 100%|██████████████████████████████████████████████| 7/7 [00:00<00:00, 575688.78 interations/s]
-A palavra 00 é gerada pela gramática - Tempo: 0.0001270771026611328s
-
-CYK: 100%|███████████████████████████████████████████| 70/70 [00:00<00:00, 1521250.16 interations/s]
-A palavra 1110 é gerada pela gramática - Tempo: 0.00015473365783691406s
-
-CYK: 100%|█████████████████████████████████████████| 392/392 [00:00<00:00, 1184558.48 interations/s]
-A palavra 0000000 é gerada pela gramática - Tempo: 0.0004589557647705078s
-
-CYK: 100%|████████████████████████████████████████| 1155/1155 [00:00<00:00, 231613.17 interations/s]
-A palavra 0101010101 é gerada pela gramática - Tempo: 0.005316972732543945s
-
-CYK: 0 interations [00:00, ? interations/s]
-A palavra λ é gerada pela gramática - Tempo: 8.082389831542969e-05s

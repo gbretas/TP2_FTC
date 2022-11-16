@@ -6,31 +6,30 @@ B:b|λ
 ENTRADAS
 a
 aabb
-aaaaabbbb
 bbbbbbb
+aaaaabbbb
 bbbaaa
 ababaa
 ababaaababa
 FIM
+CYK-Original
+`a` aceita? True: 0 interations [00:00, ? interations/s]      
+`aabb` aceita? True: 190 interations [00:00, 639580.87 interations/s]
+`bbbbbbb` aceita? False: 1064 interations [00:00, 1796593.98 interations/s]
+`aaaaabbbb` aceita? True: 2280 interations [00:00, 16198.48 interations/s]      
+`bbbaaa` aceita? True: 665 interations [00:00, 642527.57 interations/s]
+`ababaa` aceita? True: 665 interations [00:00, 150143.30 interations/s]
+`ababaaababa` aceita? True: 4180 interations [00:32, 130.04 interations/s]
 
+2NF: 
+`a` aceita? True: 0 interations [00:00, ? interations/s]      
+`aabb` aceita? True: 70 interations [00:00, 778783.24 interations/s] 
+`bbbbbbb` aceita? False: 392 interations [00:00, 1217000.12 interations/s]
+`aaaaabbbb` aceita? True: 840 interations [00:00, 1302482.57 interations/s]
+`bbbaaa` aceita? False: 245 interations [00:00, 1200472.52 interations/s]
+`ababaa` aceita? True: 245 interations [00:00, 1155910.55 interations/s]
+`ababaaababa` aceita? True: 1540 interations [00:00, 1371677.25 interations/s]
 
-CYK: 0 interations [00:00, ? interations/s]
-A palavra a é gerada pela gramática - Tempo: 0.011856317520141602s
-
-CYK: 100%|██████████████████████████████████████████| 190/190 [00:00<00:00, 725129.90 interations/s]
-A palavra aabb é gerada pela gramática - Tempo: 0.0005717277526855469s
-
-CYK: 100%|█████████████████████████████████████████| 2280/2280 [00:00<00:00, 15810.71 interations/s]
-A palavra aaaaabbbb é gerada pela gramática - Tempo: 0.14496779441833496s
-
-CYK: 100%|███████████████████████████████████████| 1064/1064 [00:00<00:00, 2508566.30 interations/s]
-A palavra bbbbbbb não é gerada pela gramática - Tempo: 0.0007119178771972656s
-
-CYK: 100%|██████████████████████████████████████████| 665/665 [00:00<00:00, 632187.71 interations/s]
-A palavra bbbaaa é gerada pela gramática - Tempo: 0.001268148422241211s
-
-CYK: 100%|██████████████████████████████████████████| 665/665 [00:00<00:00, 150931.39 interations/s]
-A palavra ababaa é gerada pela gramática - Tempo: 0.004657268524169922s
-
-CYK: 100%|███████████████████████████████████████████| 4180/4180 [00:32<00:00, 127.60 interations/s]
-A palavra ababaaababa é gerada pela gramática - Tempo: 32.85210418701172s
+Tempo CYK: 32.39s
+Tempo CYK-Modificado: 0.0s
+O tempo inclui a conversão da gramática para Chomsky/2NF, e a execução do algoritmo CYK/CYK-Modificado

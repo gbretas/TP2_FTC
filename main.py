@@ -1,7 +1,8 @@
 # Gustavo Torres Bretas Alves
 # Maria Fernanda Oliveira Guimarães
 
-import sys
+# https://www.informaticadidactica.de/index.php?page=LangeLeiss2009_en
+
 import os
 import time
 import random
@@ -55,6 +56,24 @@ class Grammar:
 
     def is_variable(self, symbol):
         return symbol in self.variables
+
+    def reachableFrom(self, state):
+        reachable = set()
+        for rule in self.rules_dict:
+            for rul in self.rules_dict[rule]:
+                if state in rul:
+                    reachable.add(rule)
+        return reachable
+
+    def reachableFromWithSymbol(self, state, symbol):
+        reachable = set()
+        for rule in self.rules_dict:
+            for rul in self.rules_dict[rule]:
+                
+                if state in rul or rul.startswith(symbol):
+                    
+                    reachable.add(rule)
+        return reachable
 
     # Checar se a gramática é livre de contexto.
     def is_context_free(self):
@@ -467,52 +486,43 @@ def convertTo2NF(gram):
         return gram
 
     new_gram = gram.copy()
-
-    # 1 Remover variáveis inúteis
-    # if debug:
-    #     print("1. Removendo variáveis inúteis\n")
-
-    # Remover variavel que deriva ela mesma
-    # for rule in new_gram.rules_dict:
-    #     for rul in new_gram.rules_dict[rule]:
-    #         if rule == rul:
-    #             new_gram.rules_dict[rule].remove(rul)
-    #             pass
-
-
-    for rule in list(new_gram.rules_dict):
-        for rul in new_gram.rules_dict[rule]:
-            if len(rul) > 2:
-                if debug:
-                    print("Removendo regra: {} -> {}".format(rule, rul))
-
-                twoFirst = rul[:2]
-
-                gerador = False
-                for rule2 in new_gram.rules_dict:
-                    rulesInRule2 = len(new_gram.rules_dict[rule2])
-                    if rulesInRule2 == 1:
-                        if new_gram.rules_dict[rule2][0] == twoFirst:
-                            gerador = rule2
-                            break
-                
-                if not gerador:
-                    gerador = getNextAlphabet(new_gram)
- 
-                    new_gram.add_variable(gerador)
-                    new_gram.add_rule([gerador, twoFirst])
-
-                if gerador:
+    loop = 0
+    while not new_gram.is_2nf():
+        loop += 1
+        if loop > 100:
+            print("Erro ao converter para 2NF")
+            break
+        for rule in list(new_gram.rules_dict):
+            for rul in new_gram.rules_dict[rule]:
+                if len(rul) > 2:
                     if debug:
                         print("Removendo regra: {} -> {}".format(rule, rul))
-                    # replace terminal to gerador in rule
-                    new_gram.rules_dict[rule].remove(rul)
-                    rulTmp = rul.replace(twoFirst, gerador)
 
-                    new_gram.add_rule([rule, rulTmp])
+                    twoFirst = rul[:2]
+                    gerador = False
+                    for rule2 in new_gram.rules_dict:
+                        rulesInRule2 = len(new_gram.rules_dict[rule2])
+                        if rulesInRule2 == 1:
+                            if new_gram.rules_dict[rule2][0] == twoFirst:
+                                gerador = rule2
+                                break
+                    
+                    if not gerador:
+                        gerador = getNextAlphabet(new_gram)
     
+                        new_gram.add_variable(gerador)
+                        new_gram.add_rule([gerador, twoFirst])
+
+                    if gerador:
+                        if debug:
+                            print("Removendo regra: {} -> {}".format(rule, rul))
+                        # replace terminal to gerador in rule
+                        new_gram.rules_dict[rule].remove(rul)
+                        rulTmp = rul.replace(twoFirst, gerador)
+
+                        new_gram.add_rule([rule, rulTmp])
     
-    
+
     if debug:
         print("")
 
@@ -523,10 +533,6 @@ def convertTo2NF(gram):
 
 # CYK Original
 def cyk(gram, word):
-
-    if debug:
-        print("Gramática convertida para Chomsky: ")
-        print(gram)
 
     # 1. Inicializar a tabela
     n = len(word)
@@ -548,19 +554,8 @@ def cyk(gram, word):
                         table[j][j].append(rule)
 
 
-    maxInterations = 0
-    for l in range(1, n):
-        for i in range(n-l):
-            j = i + l
-            for k in range(i, j):
-                for rule in gram.rules_dict:
-                    for rul in gram.rules_dict[rule]:
-                        maxInterations += 1
-
-    interation = 0
-
-    print("")
-    tqdmProgress = tqdm(total=maxInterations, desc="CYK", unit=" interations", ncols=100)
+    desc = "`{}` aceita? (running) ".format(word)
+    tqdmProgress = tqdm(desc=desc, unit=" interations", ncols=100)
 
     for l in range(1, n):
         for i in range(n-l):
@@ -568,16 +563,16 @@ def cyk(gram, word):
             for k in range(i, j):
                 for rule in gram.rules_dict:
                     for rul in gram.rules_dict[rule]:
-                        interation += 1
                         tqdmProgress.update(1)
-                        # print("Interation: {} of {}".format(interation, maxInterations))
-                        # tqdm.write("Interation: {} of {}".format(interation, maxInterations))
                         if len(rul) == 2:
                             for a in table[i][k]:
                                 for b in table[k+1][j]:
                                     if rul == a + b:
                                         table[i][j].append(rule)
+
+    tqdmProgress.set_description_str("`{}` aceita? {}".format(word, gram.start in table[0][n-1]))
     tqdmProgress.close()
+    # tqdmProgress.close()
 
     # 3. Verificar se a palavra é gerada pela gramática
     # if accept λ
@@ -595,35 +590,79 @@ def cyk(gram, word):
 # 2       Ti,i : = Û*G({ai})
 # 3       for j=2,...,n do
 # 4           for i=j-1,...,1 do
-# 5                  T' i,j : = ∅
+# 5                  T2 i,j : = ∅
 # 6                  for h=i,...,j-1 do
 # 7                      for all A → yz
 # 8                          if y ∈ Ti,h and z ∈ Th+1,j then
-# 9                              T' i,j : = T' i,j ∪{ A }
-# 10               Ti,j : = Û*G(T' i,j)
+# 9                              T2 i,j : = T2 i,j ∪{ A }
+# 10               Ti,j : = Û*G(T2 i,j)
 # 11       if S ∈ T1,n then return yes else return no
 def cyk_for_2nf(gram, word):
 
-    # 1. Inicializar a tabela
     n = len(word)
     if n == 0:
         word = "λ"
         n = 1
+
+    # 1. Inicializar a tabela
     table = [[[] for i in range(n)] for j in range(n)]
 
+    # 2. Preencher a tabela
+
+    for i in range(n):
+        states = [gram.start]
+        # for alcancaveis in gram.reachableFromWithSymbol(gram.start, word[i]):
+        #     table[i][i].append(alcancaveis)
+        for state in states:
+            for alcancaveis in gram.reachableFromWithSymbol(state, word[i]):
+                table[i][i].append(alcancaveis)
+                # states.append(alcancaveis)
+
+
+    desc = "`{}` aceita? (running) ".format(word)
+    tqdmProgress = tqdm(desc=desc, unit=" interations", ncols=100)
+
+    for l in range(1, n):
+        for i in range(n-l):
+            j = i + l
+            for k in range(i, j):
+                for rule in gram.rules_dict:
+                    for rul in gram.reachableFrom(rule):
+                        tqdmProgress.update(1)
+                        if rul == "λ":
+                            continue
+                        if len(rul) == 2:
+                            for a in table[i][k]:
+                                for b in table[k+1][j]:
+                                    if rul == a + b:
+                                        if rul not in table[i][j]:
+                                            table[i][j].append(rul)
+
+                        if len(rul) == 1:
+                            for a in table[i][k]:
+                                if rul == a:
+                                    if rul not in table[i][j]:
+                                        table[i][j].append(rul)
 
 
 
 
+    tqdmProgress.set_description_str("`{}` aceita? {}".format(word, gram.start in table[0][n-1]))
+    tqdmProgress.close()
 
 
-    # if S ∈ T1,n then return yes else return no
-    if gram.start in table[0][n-1]:
-        return True
-    else:
-        return False
 
 
+    return gram.start in table[0][n-1]
+
+
+def printTable(table):
+    for i in range(len(table)):
+        for j in range(len(table[i])):
+            #print with width 5
+            print("{:20}".format(str(table[i][j])), end=" ")
+           
+        print("")
 
 def ler_entrada(arquivo):
     if not os.path.isfile(arquivo):
@@ -687,44 +726,52 @@ def ler_entrada(arquivo):
         line = f.readline()
 
     
+
     return gramatica, entradas
     
 # Função para executar o CYK-Original
 def teste_cyk(gramatica, entradas):
-    if not gramatica.is_chomsky():
-        gramatica_chom = convertToChomsky(gramatica)
+    gramatica_chom = convertToChomsky(gramatica)
+    # print("Gramática em Chomsky: \n {}".format(gramatica_chom))
+  
 
-
+    print("CYK-Original")
     for entrada in entradas:
-        start_time = time.time()
         validacao = cyk(gramatica_chom, entrada)
-        end_time = time.time()
-        if validacao:
-            print("A palavra {} é gerada pela gramática - Tempo: {}s".format(entrada, end_time - start_time))
-        else:
-            print("A palavra {} não é gerada pela gramática - Tempo: {}s".format(entrada, end_time - start_time))
+    print("")
 
 # Função para executar o CYK-modificado
 def teste_cyk_m(gramatica, entradas):
-    if not gramatica.is_chomsky():
-        gramatica_2nf = convertTo2NF(gramatica)
+    gramatica_2nf = convertTo2NF(gramatica)
 
-    print("Gramática 2NF: {}".format(gramatica_2nf))
+    # print("Gramática 2NF:\n {}".format(gramatica_2nf))
 
+    # is in 2nf?
+    # print("É 2NF? {}".format(gramatica_2nf.is_2nf()))
+
+    print("2NF: ")
     for entrada in entradas:
-        start_time = time.time()
         validacao = cyk_for_2nf(gramatica_2nf, entrada)
-        end_time = time.time()
-        if validacao:
-            print("A palavra {} é gerada pela gramática - Tempo: {}s".format(entrada, end_time - start_time))
-        else:
-            print("A palavra {} não é gerada pela gramática - Tempo: {}s".format(entrada, end_time - start_time))
+    print("")
 
 
+grammarInput, entradas = ler_entrada("entrada04.txt")
 
+start_time_cyk = time.time()
+teste_cyk(grammarInput, entradas)
+end_time_cyk = time.time()
 
-gramatica, entradas = ler_entrada("entrada07.txt")
-# teste_cyk(gramatica, entradas)
-teste_cyk_m(gramatica, entradas)
+start_time_cyk_m = time.time()
+teste_cyk_m(grammarInput, entradas)
+end_time_cyk_m = time.time()
+
+time_cyk = round(end_time_cyk - start_time_cyk, 2)
+time_cyk_m = round(end_time_cyk_m - start_time_cyk_m, 2)
+
+print("Tempo CYK: {}s".format(time_cyk))
+print("Tempo CYK-Modificado: {}s".format(time_cyk_m))
+
+print("O tempo inclui a conversão da gramática para Chomsky/2NF, e a execução do algoritmo CYK/CYK-Modificado")
+
 
 # CYK
