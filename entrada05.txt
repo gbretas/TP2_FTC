@@ -1,0 +1,36 @@
+S,A,B
+a,b
+S:ASA|aB
+A:B|S
+B:b|λ
+ENTRADAS
+a
+aabb
+aaaaabbbb
+bbbbbbb
+bbbaaa
+ababaa
+ababaaababa
+FIM
+
+
+CYK: 0 interations [00:00, ? interations/s]
+A palavra a é gerada pela gramática - Tempo: 0.011856317520141602s
+
+CYK: 100%|██████████████████████████████████████████| 190/190 [00:00<00:00, 725129.90 interations/s]
+A palavra aabb é gerada pela gramática - Tempo: 0.0005717277526855469s
+
+CYK: 100%|█████████████████████████████████████████| 2280/2280 [00:00<00:00, 15810.71 interations/s]
+A palavra aaaaabbbb é gerada pela gramática - Tempo: 0.14496779441833496s
+
+CYK: 100%|███████████████████████████████████████| 1064/1064 [00:00<00:00, 2508566.30 interations/s]
+A palavra bbbbbbb não é gerada pela gramática - Tempo: 0.0007119178771972656s
+
+CYK: 100%|██████████████████████████████████████████| 665/665 [00:00<00:00, 632187.71 interations/s]
+A palavra bbbaaa é gerada pela gramática - Tempo: 0.001268148422241211s
+
+CYK: 100%|██████████████████████████████████████████| 665/665 [00:00<00:00, 150931.39 interations/s]
+A palavra ababaa é gerada pela gramática - Tempo: 0.004657268524169922s
+
+CYK: 100%|███████████████████████████████████████████| 4180/4180 [00:32<00:00, 127.60 interations/s]
+A palavra ababaaababa é gerada pela gramática - Tempo: 32.85210418701172s

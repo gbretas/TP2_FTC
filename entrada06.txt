@@ -1,0 +1,32 @@
+E,T,F,I
+a,b,0,1,(,),*,+
+E:T|E+T
+T:F|T*F
+F:aI|bI|(E)
+I:0I|1I|λ
+ENTRADAS
+a
+a+b*(a+b)
+(a+b)*a
+a+b*(a+b)
+(a1+b)*a
+a
+FIM
+
+CYK: 0 interations [00:00, ? interations/s]
+A palavra a é gerada pela gramática - Tempo: 0.011951208114624023s
+
+CYK: 100%|███████████████████████████████████████| 4920/4920 [00:00<00:00, 1880099.83 interations/s]
+A palavra a+b*(a+b) é gerada pela gramática - Tempo: 0.0032777786254882812s
+
+CYK: 100%|███████████████████████████████████████| 2296/2296 [00:00<00:00, 1898683.36 interations/s]
+A palavra (a+b)*a é gerada pela gramática - Tempo: 0.0015609264373779297s
+
+CYK: 100%|███████████████████████████████████████| 4920/4920 [00:00<00:00, 2108939.77 interations/s]
+A palavra a+b*(a+b) é gerada pela gramática - Tempo: 0.0027990341186523438s
+
+CYK: 100%|███████████████████████████████████████| 3444/3444 [00:00<00:00, 2093504.78 interations/s]
+A palavra (a1+b)*a é gerada pela gramática - Tempo: 0.0019910335540771484s
+
+CYK: 0 interations [00:00, ? interations/s]
+A palavra a é gerada pela gramática - Tempo: 7.009506225585938e-05s

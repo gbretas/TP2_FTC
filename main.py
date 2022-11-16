@@ -6,8 +6,9 @@ import os
 import time
 import random
 from itertools import product
+from tqdm import tqdm
 
-debug = True
+debug = False
 
 # λ
 
@@ -152,10 +153,10 @@ class Grammar:
 def getNextAlphabet(gram):
     nextAlpha = chr(ord('A') + len(gram.variables))
     while nextAlpha in gram.variables:
-        nextAlpha = chr(ord(nextAlpha) + 1)
+        # get random alpha from A-Z
+        nextAlpha = chr(ord('A') + random.randint(0, 25))
 
     return nextAlpha
-
 
 # Função para gerar combinações possíveis de trocas.
 def filler(word, from_char, to_char):
@@ -297,8 +298,15 @@ def convertToChomsky(gram):
 
     if debug:
         print("4. Converte regras remanescentes\n")
-
+    loop = 0
     while not new_gram.is_chomsky():
+    # for loop in range(1):
+
+        loop += 1
+
+        if loop > 100:
+            print("Erro ao converter para Chomsky")
+            break
     # for i in range(0, 0):
 
 
@@ -404,7 +412,7 @@ def convertToChomsky(gram):
         if debug:  
             print("\n4.2")
 
-        print(new_gram)
+        # print(new_gram)
         for rule in list(new_gram.rules_dict):
             for rul in new_gram.rules_dict[rule]:
                 if len(rul) > 2:
@@ -412,7 +420,8 @@ def convertToChomsky(gram):
                     for symbol in rul:
                         if not new_gram.is_variable(symbol):
                             break
-                    print("Removendo regra: {} -> {}".format(rule, rul))
+                    if debug:
+                        print("Removendo regra: {} -> {}".format(rule, rul))
                     # two first symbols
                     twoFirst = rul[:2]
 
@@ -514,9 +523,6 @@ def convertTo2NF(gram):
 
 # CYK Original
 def cyk(gram, word):
-    
-    if not gram.is_chomsky():
-        gram = convertToChomsky(gram)
 
     if debug:
         print("Gramática convertida para Chomsky: ")
@@ -530,12 +536,31 @@ def cyk(gram, word):
     table = [[[] for i in range(n)] for j in range(n)]
 
     # 2. Preencher a tabela
+
+    interation = 0
     for j in range(n):
         for rule in gram.rules_dict:
             for rul in gram.rules_dict[rule]:
+                interation += 1
+                # print("Interation: {} of {}".format(interation, maxInterations))
                 if len(rul) == 1:
                     if rul == word[j]:
                         table[j][j].append(rule)
+
+
+    maxInterations = 0
+    for l in range(1, n):
+        for i in range(n-l):
+            j = i + l
+            for k in range(i, j):
+                for rule in gram.rules_dict:
+                    for rul in gram.rules_dict[rule]:
+                        maxInterations += 1
+
+    interation = 0
+
+    print("")
+    tqdmProgress = tqdm(total=maxInterations, desc="CYK", unit=" interations", ncols=100)
 
     for l in range(1, n):
         for i in range(n-l):
@@ -543,13 +568,16 @@ def cyk(gram, word):
             for k in range(i, j):
                 for rule in gram.rules_dict:
                     for rul in gram.rules_dict[rule]:
+                        interation += 1
+                        tqdmProgress.update(1)
+                        # print("Interation: {} of {}".format(interation, maxInterations))
+                        # tqdm.write("Interation: {} of {}".format(interation, maxInterations))
                         if len(rul) == 2:
                             for a in table[i][k]:
                                 for b in table[k+1][j]:
                                     if rul == a + b:
                                         table[i][j].append(rule)
-
-    # print(table[0][n-1])
+    tqdmProgress.close()
 
     # 3. Verificar se a palavra é gerada pela gramática
     # if accept λ
@@ -561,20 +589,142 @@ def cyk(gram, word):
     else:
         return False
 
+# CYK Modificado
+# 	    CYK(G,ÛG,w) =
+# 1    for i=1,...,n do
+# 2       Ti,i : = Û*G({ai})
+# 3       for j=2,...,n do
+# 4           for i=j-1,...,1 do
+# 5                  T' i,j : = ∅
+# 6                  for h=i,...,j-1 do
+# 7                      for all A → yz
+# 8                          if y ∈ Ti,h and z ∈ Th+1,j then
+# 9                              T' i,j : = T' i,j ∪{ A }
+# 10               Ti,j : = Û*G(T' i,j)
+# 11       if S ∈ T1,n then return yes else return no
+def cyk_for_2nf(gram, word):
+
+    # 1. Inicializar a tabela
+    n = len(word)
+    if n == 0:
+        word = "λ"
+        n = 1
+    table = [[[] for i in range(n)] for j in range(n)]
 
 
-# CREATE GRAMMAR
-gramatica = Grammar()
 
-gramatica.add_variable('S')
 
-gramatica.add_terminal('(')
-gramatica.add_terminal(')')
-gramatica.add_terminal('[')
-gramatica.add_terminal(']')
 
-gramatica.set_start('S')
 
-gramatica.add_rule(['S', 'SS', '()', '(S)', '[]', '[S]'])
 
-print(cyk(gramatica, '()([])'))
+    # if S ∈ T1,n then return yes else return no
+    if gram.start in table[0][n-1]:
+        return True
+    else:
+        return False
+
+
+
+def ler_entrada(arquivo):
+    if not os.path.isfile(arquivo):
+        print("Arquivo não encontrado")
+        return None
+
+    # Abrir arquivo
+    f = open(arquivo, "r")
+
+    gramatica = Grammar()
+    # Ler primeira linha
+    line = f.readline()
+    line = line.replace(" ", "")
+    line = line.replace("\n", "")
+    # A primeira linha contém as variáveis
+    splitted = line.split(",")
+    for var in splitted:
+        if not gramatica.start:
+            gramatica.start = var
+        gramatica.add_variable(var)
+
+    # Ler segunda linha
+    line = f.readline()
+    line = line.replace(" ", "")
+    line = line.replace("\n", "")
+    # A segunda linha contém os terminais
+    splitted = line.split(",")
+    for term in splitted:
+        gramatica.add_terminal(term)
+
+    #WHILE != ENTRADAS
+    # Ler terceira linha
+    line = f.readline()
+    while line != "ENTRADAS\n":
+        line = line.replace(" ", "")
+        line = line.replace("\n", "")
+        # A terceira linha contém as regras
+        splitted = line.split(":")
+        rule = splitted[0]
+        rul = splitted[1].split("|")
+
+        for r in rul:
+            gramatica.add_rule([rule, r])
+
+        line = f.readline()
+
+    #WHILE != FIM
+    # Ler entradas
+    entradas = []
+    line = f.readline()
+    # while not end of file
+    while line != "FIM\n" or line != "":
+        if not line:
+            break
+        line = line.replace(" ", "")
+        line = line.replace("\n", "")
+        if line == "FIM":
+            break
+        entradas.append(line)
+
+        line = f.readline()
+
+    
+    return gramatica, entradas
+    
+# Função para executar o CYK-Original
+def teste_cyk(gramatica, entradas):
+    if not gramatica.is_chomsky():
+        gramatica_chom = convertToChomsky(gramatica)
+
+
+    for entrada in entradas:
+        start_time = time.time()
+        validacao = cyk(gramatica_chom, entrada)
+        end_time = time.time()
+        if validacao:
+            print("A palavra {} é gerada pela gramática - Tempo: {}s".format(entrada, end_time - start_time))
+        else:
+            print("A palavra {} não é gerada pela gramática - Tempo: {}s".format(entrada, end_time - start_time))
+
+# Função para executar o CYK-modificado
+def teste_cyk_m(gramatica, entradas):
+    if not gramatica.is_chomsky():
+        gramatica_2nf = convertTo2NF(gramatica)
+
+    print("Gramática 2NF: {}".format(gramatica_2nf))
+
+    for entrada in entradas:
+        start_time = time.time()
+        validacao = cyk_for_2nf(gramatica_2nf, entrada)
+        end_time = time.time()
+        if validacao:
+            print("A palavra {} é gerada pela gramática - Tempo: {}s".format(entrada, end_time - start_time))
+        else:
+            print("A palavra {} não é gerada pela gramática - Tempo: {}s".format(entrada, end_time - start_time))
+
+
+
+
+gramatica, entradas = ler_entrada("entrada07.txt")
+# teste_cyk(gramatica, entradas)
+teste_cyk_m(gramatica, entradas)
+
+# CYK
