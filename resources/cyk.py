@@ -1,8 +1,28 @@
 from tqdm import tqdm
-from printTable import printTable
+# from resources.printTable import printTable
 
 
 # CYK Original
+
+# input: a CFG G = (N,Σ,S,→) in CNF, a word w = a1...an ∈ Σ+
+ 
+# CYK(G,w) =
+# 1     for i=1,...,n do
+# 2        Ti,i : = {A ∈ N | A→ ai}
+# 3     for j=2,...,n do
+# 4        for i=j-1,...,1 do
+# 5            Ti,j : = ∅;
+# 6            for h=i,...,j-1 do
+# 7                for all A → BC
+# 8                    if B ∈ Ti,h and C ∈ Th+1,j then
+# 9                       Ti,j : = Ti,j ∪{ A }
+ 
+# 10    if S ∈ T1,n then return yes else return no
+ 
+
+# Figure 1: Algorithm CYK for the word problem of CFGs in CNF.
+
+
 def cyk(gram, word):
 
     # 1. Inicializar a tabela

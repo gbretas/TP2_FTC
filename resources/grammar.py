@@ -1,3 +1,6 @@
+# Digraph
+#   - A directed graph
+from graphviz import Digraph
 
 # Classe que representa uma gramática.
 class Grammar:
@@ -114,6 +117,19 @@ class Grammar:
             for rul in rule[1::]:
                 if rul not in self.rules_dict[rule[0]]:
                     self.rules_dict[rule[0]].append(rul)
+
+
+    def graph(self, symbol):
+        dot = Digraph()
+        for rule in self.rules_dict:
+            for rul in self.rules_dict[rule]:
+                # if symbol is str
+                if symbol == str(symbol):
+                    if symbol in rul:
+                        dot.edge(rule, rul)
+        return dot
+       
+
 
     def copy(self):
         grammar = Grammar()

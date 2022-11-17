@@ -1,15 +1,10 @@
 
-from itertools import product
-from grammar import Grammar
+from resources.grammar import Grammar
 import os
-from converts import convertToChomsky, convertTo2NF
-from cyk import cyk
-from cykm import cyk_for_2nf
+from resources.converts import convertToChomsky, convertTo2NF
+from resources.cyk import cyk
+from resources.cykm import cyk_for_2nf
 
-# Função para gerar combinações possíveis de trocas.
-def filler(word, from_char, to_char):
-    options = [(c,) if c != from_char else (from_char, to_char) for c in word]
-    return (''.join(o) for o in product(*options))
 
 
 def ler_entrada(arquivo):

@@ -1,4 +1,11 @@
-from grammar import Grammar
+from itertools import product
+from resources.grammar import Grammar
+
+# Função para gerar combinações possíveis de trocas.
+def filler(word, from_char, to_char):
+    options = [(c,) if c != from_char else (from_char, to_char) for c in word]
+    return (''.join(o) for o in product(*options))
+
 import random
 debug = False
 # Função que pega a próxima letra do alfabeto.
