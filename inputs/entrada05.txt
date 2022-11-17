@@ -12,6 +12,7 @@ bbbaaa
 ababaa
 ababaaababa
 FIM
+
 CYK-Original
 `a` aceita? True: 0 interations [00:00, ? interations/s]      
 `aabb` aceita? True: 190 interations [00:00, 639580.87 interations/s]
@@ -32,4 +33,3 @@ CYK-Original
 
 Tempo CYK: 32.39s
 Tempo CYK-Modificado: 0.0s
-O tempo inclui a conversão da gramática para Chomsky/2NF, e a execução do algoritmo CYK/CYK-Modificado
