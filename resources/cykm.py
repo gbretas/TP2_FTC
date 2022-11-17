@@ -35,6 +35,8 @@ def cyk_for_2nf(gram, word):
 
     # 2. Preencher a tabela
 
+    
+
 
     # 3. Verificar se a palavra é aceita
     if gram.start in table[0][n-1]:
