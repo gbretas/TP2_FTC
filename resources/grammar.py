@@ -3,6 +3,7 @@
 from graphviz import Digraph
 
 # Classe que representa uma gramática.
+# https://github.com/Kymberlly/CYK_Modificado/blob/master/src/cyk/Classes/CYK_MOD.java
 class Grammar:
     def __init__(self):
         self.variables = []
