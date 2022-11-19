@@ -9,6 +9,8 @@ class Grammar:
         self.terminals = []
         self.start = ''
         self.rules_dict = {}
+        self.relacaoUnitariaDt = []
+        self.relacaoUnitariaReversa = []
 
     def add_variable(self, variable):
         self.variables.append(variable)
@@ -119,16 +121,66 @@ class Grammar:
                     self.rules_dict[rule[0]].append(rul)
 
 
-    def graph(self, symbol):
-        dot = Digraph()
-        for rule in self.rules_dict:
-            for rul in self.rules_dict[rule]:
-                # if symbol is str
-                if symbol == str(symbol):
-                    if symbol in rul:
-                        dot.edge(rule, rul)
-        return dot
-       
+    # Ferramentas para o 2NF
+
+    def criarFechoUnitario(self, string):
+        fecho = []
+        fecho.append(string)
+        tmp = []
+        tmp.append(""+string)
+        while len(tmp) != 0:
+            var = tmp[0]
+            tmp.remove(var)
+            for s in self.relacaoUnitariaReversa:
+                if s[1] == var:
+                    if s[3] not in fecho:
+                        tmp.append(s[3])
+                        fecho.append(s[3])
+        return fecho
+        
+    def relacaoUnitaria(self):
+        #  List<String> relacaoUnitaria = new ArrayList<String>();
+        # List<String> relacaoUnitariaReversa = new ArrayList<String>();
+        # for(Regra r : regras){
+        #     for(String s : r.producoes){
+        #         /*Se for um unico elemento e nao for lambda e nem anulavel, crio a relacao unitaria e a reversa*/
+        #         if(s.length() == 1 && !s.equals("?") && !anulaveis.contains(s)){
+        #             String novaRelacao = "("+r.getSimboloInicial() + "," + s + ")";
+        #             if(!relacaoUnitaria.contains(novaRelacao))
+        #                 relacaoUnitaria.add(novaRelacao);
+        #             String novaRelacaoReversa = "("+ s + "," + r.getSimboloInicial() + ")";
+        #             if(!relacaoUnitariaReversa.contains(novaRelacaoReversa))
+        #                 relacaoUnitariaReversa.add(novaRelacaoReversa);
+        #             /*se for maior que um tenho que testar as possibilidades*/
+        #         }else if(s.length() > 1){
+        #             if(!anulaveis.contains(s.charAt(0)+"") && anulaveis.contains(s.charAt(1)+"")){
+        #                 String novaRelacao = "("+r.getSimboloInicial() + "," + s.charAt(0) + ")";
+        #                 if(!relacaoUnitaria.contains(novaRelacao))
+        #                     relacaoUnitaria.add(novaRelacao);
+        #                 String novaRelacaoReversa = "("+ s.charAt(0) + "," + r.getSimboloInicial() + ")";
+        #                 if(!relacaoUnitariaReversa.contains(novaRelacaoReversa))
+        #                     relacaoUnitariaReversa.add(novaRelacaoReversa);
+        #             }else if(anulaveis.contains(s.charAt(0)+"")){
+        #                 String novaRelacao = "("+r.getSimboloInicial() + "," + s.charAt(1) + ")";
+        #                 if(!relacaoUnitaria.contains(novaRelacao))
+        #                     relacaoUnitaria.add(novaRelacao);
+        #                 String novaRelacaoReversa = "("+ s.charAt(1) + "," + r.getSimboloInicial() + ")";
+        #                 if(!relacaoUnitariaReversa.contains(novaRelacaoReversa))
+        #                     relacaoUnitariaReversa.add(novaRelacaoReversa);
+        #             }
+        #         }
+        #     }
+        # }
+
+        # System.out.println("Ug: " + relacaoUnitaria);
+        # this.relacaoUnitaria = relacaoUnitaria;
+        # System.out.println("Ûg: " + relacaoUnitariaReversa);
+        # this.relacaoUnitariaReversa = relacaoUnitariaReversa;
+
+        self.relacaoUnitariaDt = []
+        self.relacaoUnitariaReversa = []
+
+        
 
 
     def copy(self):
@@ -138,6 +190,7 @@ class Grammar:
         grammar.start = self.start
         grammar.rules_dict = self.rules_dict.copy()
         return grammar
+        
 
     def __str__(self):
 
