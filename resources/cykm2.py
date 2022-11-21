@@ -83,13 +83,16 @@ def cyk_for_2nf_2(gram, word):
                             c1 = rul[0]
                             c2 = rul[1]
                             if c1 in t[i][h] and c2 in t[h+1][j]:
+                                print("c1: {} c2: {}".format(c1, c2))
                                 tt[i][j].append(rule)
-                                pass
 
-                tmp = gram.fechoUnitario(" ".join(tt[i][j]))
-                for s in tmp:
-                    t[i][j].append(s)
-                    pass
+                for k1 in tt[i][j]:
+                    tmp = gram.fechoUnitario(k1 + "")
+                
+                    for s in tmp:
+                        for ss in s:
+                            t[i][j].append(ss)
+                        # t[i][j].append(s)
 
 
         
@@ -97,7 +100,9 @@ def cyk_for_2nf_2(gram, word):
     # print(gram.criarFechoUnitario(word))
 
     # gram.relacaoUnitaria()
-    # printTable(t)
+    printTable(t)
+
+    print(t[0][n-1])
 
     if gram.start in t[0][n-1]:
         print("sim")

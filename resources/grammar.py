@@ -124,20 +124,23 @@ class Grammar:
 
 
     # Ferramentas para o 2NF
-
     def criarFechoUnitario(self, string):
         fecho = []
         fecho.append(string)
         tmp = []
         tmp.append(""+string)
+
         while len(tmp) != 0:
+
             var = tmp[0]
             tmp.remove(var)
+
             for s in self.relacaoUnitariaReversa:
-                if var == s[0]:
-                    if s[1] not in fecho:
-                        fecho.append(s[1])
-                        tmp.append(s[1])
+                if s[1] == var:
+                    if s[0] not in fecho:
+                        fecho.append(s[0])
+                        tmp.append(s[0])
+
         return fecho
 
     def fechoUnitario(self, string):
