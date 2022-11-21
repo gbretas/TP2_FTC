@@ -72,7 +72,8 @@ def cyk_for_2nf_2(gram, word):
         tmp = gram.fechoUnitario(word[i]+"")
         for s in tmp:
             for ss in s:
-                t[i][i].append(ss)
+                # t[i][i].append(ss)
+                t[i][i].append("A")
 
     for j in range(1, n):
         for i in range(j-1, -1, -1):
