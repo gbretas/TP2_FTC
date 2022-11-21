@@ -84,7 +84,6 @@ def cyk_for_2nf_2(gram, word):
                             c1 = rul[0]
                             c2 = rul[1]
                             if c1 in t[i][h] and c2 in t[h+1][j]:
-                                print("c1: {} c2: {}".format(c1, c2))
                                 tt[i][j].append(rule)
 
                 for k1 in tt[i][j]:
