@@ -4,14 +4,14 @@ S:ASA|aB
 A:B|S
 B:b|λ
 ENTRADAS
-a
 aabb
+FIM
+a
 bbbbbbb
 aaaaabbbb
 bbbaaa
 ababaa
 ababaaababa
-FIM
 
 CYK-Original
 `a` aceita? True: 0 interations [00:00, ? interations/s]      

@@ -12,6 +12,7 @@ class Grammar:
         self.rules_dict = {}
         self.relacaoUnitariaDt = []
         self.relacaoUnitariaReversa = []
+        self.anulaveis = []
 
     def add_variable(self, variable):
         self.variables.append(variable)
@@ -133,53 +134,43 @@ class Grammar:
             var = tmp[0]
             tmp.remove(var)
             for s in self.relacaoUnitariaReversa:
-                if s[1] == var:
-                    if s[3] not in fecho:
-                        tmp.append(s[3])
-                        fecho.append(s[3])
+                if var == s[0]:
+                    if s[1] not in fecho:
+                        fecho.append(s[1])
+                        tmp.append(s[1])
         return fecho
+
+    def fechoUnitario(self, string):
+        split = string.split(" ")
+        resposta = []
+        for s in split:
+            resposta.append(self.criarFechoUnitario(s))
+
+        return resposta
+        
         
     def relacaoUnitaria(self):
-        #  List<String> relacaoUnitaria = new ArrayList<String>();
-        # List<String> relacaoUnitariaReversa = new ArrayList<String>();
-        # for(Regra r : regras){
-        #     for(String s : r.producoes){
-        #         /*Se for um unico elemento e nao for lambda e nem anulavel, crio a relacao unitaria e a reversa*/
-        #         if(s.length() == 1 && !s.equals("?") && !anulaveis.contains(s)){
-        #             String novaRelacao = "("+r.getSimboloInicial() + "," + s + ")";
-        #             if(!relacaoUnitaria.contains(novaRelacao))
-        #                 relacaoUnitaria.add(novaRelacao);
-        #             String novaRelacaoReversa = "("+ s + "," + r.getSimboloInicial() + ")";
-        #             if(!relacaoUnitariaReversa.contains(novaRelacaoReversa))
-        #                 relacaoUnitariaReversa.add(novaRelacaoReversa);
-        #             /*se for maior que um tenho que testar as possibilidades*/
-        #         }else if(s.length() > 1){
-        #             if(!anulaveis.contains(s.charAt(0)+"") && anulaveis.contains(s.charAt(1)+"")){
-        #                 String novaRelacao = "("+r.getSimboloInicial() + "," + s.charAt(0) + ")";
-        #                 if(!relacaoUnitaria.contains(novaRelacao))
-        #                     relacaoUnitaria.add(novaRelacao);
-        #                 String novaRelacaoReversa = "("+ s.charAt(0) + "," + r.getSimboloInicial() + ")";
-        #                 if(!relacaoUnitariaReversa.contains(novaRelacaoReversa))
-        #                     relacaoUnitariaReversa.add(novaRelacaoReversa);
-        #             }else if(anulaveis.contains(s.charAt(0)+"")){
-        #                 String novaRelacao = "("+r.getSimboloInicial() + "," + s.charAt(1) + ")";
-        #                 if(!relacaoUnitaria.contains(novaRelacao))
-        #                     relacaoUnitaria.add(novaRelacao);
-        #                 String novaRelacaoReversa = "("+ s.charAt(1) + "," + r.getSimboloInicial() + ")";
-        #                 if(!relacaoUnitariaReversa.contains(novaRelacaoReversa))
-        #                     relacaoUnitariaReversa.add(novaRelacaoReversa);
-        #             }
-        #         }
-        #     }
-        # }
-
-        # System.out.println("Ug: " + relacaoUnitaria);
-        # this.relacaoUnitaria = relacaoUnitaria;
-        # System.out.println("Ûg: " + relacaoUnitariaReversa);
-        # this.relacaoUnitariaReversa = relacaoUnitariaReversa;
 
         self.relacaoUnitariaDt = []
         self.relacaoUnitariaReversa = []
+
+        for rule in self.rules_dict:
+            for rul in self.rules_dict[rule]:
+                if len(rul) == 1 and rul != "λ" and rul not in self.anulaveis:
+                    self.relacaoUnitariaDt.append((rule, rul))
+                    self.relacaoUnitariaReversa.append((rul, rule))
+                elif len(rul) > 1:
+                    if rul[0] not in self.anulaveis and rul[1] in self.anulaveis:
+                        self.relacaoUnitariaDt.append((rule, rul[0]))
+                        self.relacaoUnitariaReversa.append((rul[0], rule))
+                    elif rul[0] in self.anulaveis:
+                        self.relacaoUnitariaDt.append((rule, rul[1]))
+                        self.relacaoUnitariaReversa.append((rul[1], rule))
+
+            # print("Ug: ", self.relacaoUnitariaDt)
+            # print("Ûg: ", self.relacaoUnitariaReversa)
+
+
 
         
 
