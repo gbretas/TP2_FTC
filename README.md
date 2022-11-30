@@ -10,6 +10,68 @@ Gustavo Torres Bretas Alves - 689655 \
 Maria Fernanda Oliveira Guimarães - 
 
 ------
+## Execução
+
+Para executar o programa, basta executar o arquivo **main.py** usando:
+````
+python main.py
+````
+O programa irá pedir o index do arquivo de entrada, que deve estar na pasta **inputs**.\
+O arquivo de entrada deve estar no formato descrito abaixo.
+
+Tenha certeza de que está na pasta raiz do projeto, pois o programa irá procurar os arquivos de entrada na pasta **inputs**.
+
+### Exemplo de execução
+
+````
+(base) gbretas@macprom1 TP2 % python3 main.py
+1 - entrada01.txt
+2 - entrada02.txt
+3 - entrada03.txt
+4 - entrada04.txt
+5 - entrada05.txt
+6 - entrada06.txt
+7 - entrada07.txt
+8 - readme.txt
+Escolha o arquivo de entrada (ex.: 1): 2
+
+CYK-Original
+`00` aceita? True: 17 interations [00:00, 61841.43 interations/s] 
+`011` aceita? False: 68 interations [00:00, 352114.41 interations/s]
+`000` aceita? True: 68 interations [00:00, 450572.94 interations/s]
+`0000` aceita? True: 170 interations [00:00, 596679.23 interations/s]
+`00000` aceita? True: 340 interations [00:00, 649983.30 interations/s]
+`101101` aceita? True: 595 interations [00:00, 864730.03 interations/s]
+`101101101101101101101101101101101101101101` aceita? True: 209797 interations [00:00, 1075456.39 interations/s]    
+`101101101101101101101101101101101101101101101101101101101101` aceita? True: 611830 interations [00:00, 1141320.03 interations/s]      
+`101101101101101101111101101101101101101101101101101101101101` aceita? False: 611830 interations [00:00, 1214539.17 interations/s]     
+
+É 2NF? True
+2NF: 
+`00` aceita? True: 7 interations [00:00, 88701.29 interations/s] 
+`011` aceita? False: 28 interations [00:00, 304250.03 interations/s]
+`000` aceita? True: 28 interations [00:00, 310689.19 interations/s]
+`0000` aceita? True: 70 interations [00:00, 542701.07 interations/s]
+`00000` aceita? True: 140 interations [00:00, 724941.43 interations/s]
+`101101` aceita? True: 245 interations [00:00, 878294.43 interations/s] 
+`101101101101101101101101101101101101101101` aceita? True: 86387 interations [00:00, 968930.08 interations/s]
+`101101101101101101101101101101101101101101101101101101101101` aceita? True: 251930 interations [00:00, 1161535.60 interations/s]      
+`101101101101101101111101101101101101101101101101101101101101` aceita? False: 251930 interations [00:00, 1220739.63 interations/s]     
+
+Tempo CYK: 1.26s
+Tempo CYK-Modificado: 0.52s
+
+Deseja executar outro arquivo de entrada?
+1. Sim
+2. Não
+Opção: 2
+Saindo...
+
+````
+
+
+
+------
 
 ## Objetivo
 Neste trabalho, você deverá implementar **dois métodos** para verificar a **pertinência de uma sentença a uma  determinada  LLC** usando: 
