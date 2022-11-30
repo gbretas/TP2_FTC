@@ -7,7 +7,7 @@ Trabalho desenvolvido em **Python** para a disciplina de Teoria da Computação,
 ## Alunos
 
 Gustavo Torres Bretas Alves - 689655 \
-Maria Fernanda Oliveira Guimarães - 
+Maria Fernanda Oliveira Guimarães - 690667Print2022-11-30 at 12.18.17@2x.jpg
 
 ------
 ## Execução
@@ -165,4 +165,18 @@ resources: Pasta que contém os arquivos de recursos.\
     - cykm.py: Arquivo que contém as funções de CYK Modificado.\
     - functions.py: Arquivo que contém as funções auxiliares.\
     - grammar.py: Arquivo que contém a classe Gramática.
+
+----
+
+## Referências
+
+Materiais de aula
+
+https://www.youtube.com/watch?v=VTH1k-xiswM&pp=ugMICgJwdBABGAE%3D
+
+https://www.informaticadidactica.de/index.php?page=LangeLeiss2009_en
+
+https://github.com/Kymberlly/CYK_Modificado/
+
+https://github.com/nikoladimitroff/CfgSolver/
 
