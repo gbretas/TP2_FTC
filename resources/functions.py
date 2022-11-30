@@ -89,9 +89,10 @@ def teste_cyk_m(gramatica, entradas):
     gramatica_2nf = convertTo2NF(gramatica)
 
     # print("Gramática 2NF:\n {}".format(gramatica_2nf))
+    #Conversão está correta
 
     # is in 2nf?
-    # print("É 2NF? {}".format(gramatica_2nf.is_2nf()))
+    print("É 2NF? {}".format(gramatica_2nf.is_2nf()))
 
     print("2NF: ")
     for entrada in entradas:

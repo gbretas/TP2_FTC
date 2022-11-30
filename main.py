@@ -10,10 +10,10 @@ from resources.functions import *
 debug = False
 
 
-grammarInput, entradas = ler_entrada("inputs/entrada06.txt")
+grammarInput, entradas = ler_entrada("inputs/entrada05.txt")
 
 start_time_cyk = time.time()
-# teste_cyk(grammarInput, entradas)
+teste_cyk(grammarInput, entradas)
 end_time_cyk = time.time()
 
 start_time_cyk_m = time.time()
