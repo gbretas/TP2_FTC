@@ -67,3 +67,40 @@ Pode-se colocar qualquer coisa aqui.
    4.1  O programa cria uma tabela CYK Modificado, que é uma classe que contém a tabela CYK Modificado e os métodos para preenchê-la, logo após, o programa preenche a tabela CYK Modificado e verifica se a sentença pertence ou não à gramática.
 
 5. O programa retorna as saídas no terminal.
+
+------
+
+## Estrutura de arquivos
+
+```
+.
+├── README.md
+├── inputs
+│   ├── entrada01.txt
+│   ├── entrada02.txt
+│   ├── entrada03.txt
+│   ├── entrada04.txt
+│   ├── entrada05.txt
+│   ├── entrada06.txt
+│   ├── entrada07.txt
+│   └── readme.txt
+├── main.py
+└── resources
+    ├── converts.py
+    ├── cyk.py
+    ├── cykm.py
+    ├── functions.py
+    ├── grammar.py
+
+```
+
+README.md: Arquivo que contém a descrição do trabalho.\
+inputs: Pasta que contém os arquivos de entrada.\
+main.py: Arquivo que contém o código principal.\
+resources: Pasta que contém os arquivos de recursos.\
+    - converts.py: Arquivo que contém as funções de conversão de gramáticas.\
+    - cyk.py: Arquivo que contém as funções de CYK.\
+    - cykm.py: Arquivo que contém as funções de CYK Modificado.\
+    - functions.py: Arquivo que contém as funções auxiliares.\
+    - grammar.py: Arquivo que contém a classe Gramática.
+

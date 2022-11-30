@@ -1,5 +1,4 @@
 from tqdm import tqdm
-# from resources.printTable import printTable
 
 
 # CYK Original
