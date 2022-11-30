@@ -14,4 +14,5 @@ ENTRADAS
 ()()[][]
 ()[[()]]
 FIM
+Pode-se colocar qualquer coisa aqui.
 ```

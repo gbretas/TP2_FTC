@@ -4,6 +4,8 @@ from graphviz import Digraph
 
 # Classe que representa uma gramática.
 # https://github.com/Kymberlly/CYK_Modificado/blob/master/src/cyk/Classes/CYK_MOD.java
+# https://github.com/nikoladimitroff/CfgSolver/blob/master/cfgSolver.js
+
 class Grammar:
     def __init__(self):
         self.variables = []
@@ -121,57 +123,6 @@ class Grammar:
             for rul in rule[1::]:
                 if rul not in self.rules_dict[rule[0]]:
                     self.rules_dict[rule[0]].append(rul)
-
-
-    # Ferramentas para o 2NF
-    def criarFechoUnitario(self, string):
-        fecho = []
-        fecho.append(string)
-        tmp = []
-        tmp.append(""+string)
-
-        while len(tmp) != 0:
-
-            var = tmp[0]
-            tmp.remove(var)
-
-            for s in self.relacaoUnitariaReversa:
-                if s[1] == var:
-                    if s[0] not in fecho:
-                        fecho.append(s[0])
-                        tmp.append(s[0])
-
-        return fecho
-
-    def fechoUnitario(self, string):
-        split = string.split(" ")
-        resposta = []
-        for s in split:
-            resposta.append(self.criarFechoUnitario(s))
-
-        return resposta
-        
-        
-    def relacaoUnitaria(self):
-
-        self.relacaoUnitariaDt = []
-        self.relacaoUnitariaReversa = []
-
-        for rule in self.rules_dict:
-            for rul in self.rules_dict[rule]:
-                if len(rul) == 1 and rul != "λ" and rul not in self.anulaveis:
-                    self.relacaoUnitariaDt.append((rule, rul))
-                    self.relacaoUnitariaReversa.append((rul, rule))
-                elif len(rul) > 1:
-                    if rul[0] not in self.anulaveis and rul[1] in self.anulaveis:
-                        self.relacaoUnitariaDt.append((rule, rul[0]))
-                        self.relacaoUnitariaReversa.append((rul[0], rule))
-                    elif rul[0] in self.anulaveis:
-                        self.relacaoUnitariaDt.append((rule, rul[1]))
-                        self.relacaoUnitariaReversa.append((rul[1], rule))
-
-            # print("Ug: ", self.relacaoUnitariaDt)
-            # print("Ûg: ", self.relacaoUnitariaReversa)
 
 
 

@@ -6,11 +6,11 @@ F:aI|bI|(E)
 I:0I|1I|λ
 ENTRADAS
 a0+b
-FIM
 (a0+b)*a
-
 a+b*(a+b)
 a+b*(a+b)
 (a1+b)*a
 a
+aba
+FIM
 FIM

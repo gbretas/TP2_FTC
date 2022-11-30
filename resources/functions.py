@@ -4,7 +4,6 @@ import os
 from resources.converts import convertToChomsky, convertTo2NF
 from resources.cyk import cyk
 from resources.cykm import cyk_for_2nf
-from resources.cykm2 import cyk_for_2nf_2
 
 
 
@@ -96,5 +95,5 @@ def teste_cyk_m(gramatica, entradas):
 
     print("2NF: ")
     for entrada in entradas:
-        validacao = cyk_for_2nf_2(gramatica_2nf, entrada)
+        validacao = cyk_for_2nf(gramatica_2nf, entrada)
     print("")
