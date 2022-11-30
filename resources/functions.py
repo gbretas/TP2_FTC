@@ -44,8 +44,12 @@ def ler_entrada(arquivo):
         line = line.replace("\n", "")
         # A terceira linha contém as regras
         splitted = line.split(":")
-        rule = splitted[0]
-        rul = splitted[1].split("|")
+        try:
+            rule = splitted[0]
+            rul = splitted[1].split("|")
+        except:
+            # throw error
+            raise Exception("Erro ao ler arquivo de entrada")
 
         for r in rul:
             gramatica.add_rule([rule, r])
@@ -71,7 +75,32 @@ def ler_entrada(arquivo):
     
 
     return gramatica, entradas
-    
+
+
+def selectEntrada():
+    # folder inputs
+    allFiles  = os.listdir("inputs")
+    indices = []
+    for file in allFiles:
+        if file.endswith(".txt"):
+            indices.append(file)
+
+    # order indices
+    indices.sort()
+
+    # print indices
+    for i in range(len(indices)):
+        print("{} - {}".format(i+1, indices[i]))
+
+    entrada = int(input("Escolha o arquivo de entrada (ex.: 1): "))
+
+    if entrada > len(indices) or entrada < 1:
+        print("Entrada inválida")
+        return None
+
+    return "inputs/" + indices[entrada - 1]
+
+
 # Função para executar o CYK-Original
 def teste_cyk(gramatica, entradas):
     gramatica_chom = convertToChomsky(gramatica)

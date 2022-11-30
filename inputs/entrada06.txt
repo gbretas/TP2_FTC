@@ -13,4 +13,26 @@ a+b*(a+b)
 a
 aba
 FIM
-FIM
+
+
+CYK-Original
+`a0+b` aceita? True: 410 interations [00:00, 536724.29 interations/s]
+`(a0+b)*a` aceita? True: 3444 interations [00:00, 941483.61 interations/s]
+`a+b*(a+b)` aceita? True: 4920 interations [00:00, 1098710.24 interations/s]
+`a+b*(a+b)` aceita? True: 4920 interations [00:00, 1088739.88 interations/s]
+`(a1+b)*a` aceita? True: 3444 interations [00:00, 1034236.63 interations/s]
+`a` aceita? True: 0 interations [00:00, ? interations/s]      
+`aba` aceita? False: 164 interations [00:00, 496654.05 interations/s]
+
+É 2NF? True
+2NF: 
+`a0+b` aceita? True: 130 interations [00:00, 695484.08 interations/s]
+`(a0+b)*a` aceita? True: 1092 interations [00:00, 1078958.77 interations/s]
+`a+b*(a+b)` aceita? True: 1560 interations [00:00, 1108814.48 interations/s]
+`a+b*(a+b)` aceita? True: 1560 interations [00:00, 1112018.06 interations/s]
+`(a1+b)*a` aceita? True: 1092 interations [00:00, 1082273.15 interations/s]
+`a` aceita? True: 0 interations [00:00, ? interations/s]      
+`aba` aceita? False: 52 interations [00:00, 481465.36 interations/s]
+
+Tempo CYK: 0.02s
+Tempo CYK-Modificado: 0.01s

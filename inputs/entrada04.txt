@@ -8,7 +8,6 @@ E:0C|λ
 ENTRADAS
 01
 00
-FIM
 000111
 00111
 0111
@@ -20,4 +19,38 @@ FIM
 001010010100101
 00101001010010100000
 001010010100101000010
+FIM
 
+CYK-Original
+`01` aceita? False: 16 interations [00:00, 99420.54 interations/s] 
+`00` aceita? True: 16 interations [00:00, 160164.35 interations/s]
+`000111` aceita? False: 560 interations [00:00, 601487.90 interations/s]
+`00111` aceita? False: 320 interations [00:00, 516023.56 interations/s]
+`0111` aceita? False: 160 interations [00:00, 631910.21 interations/s]
+`00` aceita? True: 16 interations [00:00, 185897.13 interations/s]
+`001` aceita? True: 64 interations [00:00, 369745.81 interations/s]
+`000011` aceita? False: 560 interations [00:00, 506318.22 interations/s]
+`0010` aceita? True: 160 interations [00:00, 557382.59 interations/s]
+`00101` aceita? True: 320 interations [00:00, 596788.47 interations/s]
+`001010010100101` aceita? True: 8960 interations [00:00, 608697.18 interations/s]
+`00101001010010100000` aceita? True: 21280 interations [00:00, 677424.85 interations/s]
+`001010010100101000010` aceita? True: 24640 interations [00:00, 687613.69 interations/s]
+
+É 2NF? True
+2NF: 
+`01` aceita? False: 10 interations [00:00, 161319.38 interations/s]
+`00` aceita? True: 10 interations [00:00, 185588.67 interations/s]
+`000111` aceita? False: 350 interations [00:00, 961996.33 interations/s] 
+`00111` aceita? False: 200 interations [00:00, 1205259.77 interations/s]
+`0111` aceita? False: 100 interations [00:00, 1023000.98 interations/s]
+`00` aceita? True: 10 interations [00:00, 226719.14 interations/s]
+`001` aceita? True: 40 interations [00:00, 572601.23 interations/s] 
+`000011` aceita? False: 350 interations [00:00, 1235695.62 interations/s]
+`0010` aceita? True: 100 interations [00:00, 917790.81 interations/s] 
+`00101` aceita? True: 200 interations [00:00, 1118481.07 interations/s]
+`001010010100101` aceita? True: 5600 interations [00:00, 1552932.39 interations/s]
+`00101001010010100000` aceita? True: 13300 interations [00:00, 1592243.28 interations/s]
+`001010010100101000010` aceita? True: 15400 interations [00:00, 1572698.05 interations/s]
+
+Tempo CYK: 0.11s
+Tempo CYK-Modificado: 0.02s

@@ -11,3 +11,25 @@ ENTRADAS
 0000000
 0101010101
 FIM
+
+CYK-Original
+`1` aceita? True: 0 interations [00:00, ? interations/s]      
+`0` aceita? True: 0 interations [00:00, ? interations/s]      
+`11` aceita? True: 7 interations [00:00, 67963.26 interations/s] 
+`00` aceita? True: 7 interations [00:00, 81329.99 interations/s] 
+`1110` aceita? True: 70 interations [00:00, 374014.37 interations/s]
+`0000000` aceita? True: 392 interations [00:00, 319503.92 interations/s]
+`0101010101` aceita? True: 1155 interations [00:00, 85980.89 interations/s]
+
+É 2NF? True
+2NF: 
+`1` aceita? True: 0 interations [00:00, ? interations/s]      
+`0` aceita? True: 0 interations [00:00, ? interations/s]      
+`11` aceita? True: 7 interations [00:00, 98523.92 interations/s] 
+`00` aceita? True: 7 interations [00:00, 112923.57 interations/s]
+`1110` aceita? True: 70 interations [00:00, 475852.97 interations/s]
+`0000000` aceita? True: 392 interations [00:00, 753859.32 interations/s]
+`0101010101` aceita? True: 1155 interations [00:00, 797698.19 interations/s]
+
+Tempo CYK: 0.02s
+Tempo CYK-Modificado: 0.0s

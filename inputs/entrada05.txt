@@ -5,31 +5,30 @@ A:B|S
 B:b|λ
 ENTRADAS
 aabb
-FIM
 a
 bbbbbbb
 aaaaabbbb
-bbbaaa
 ababaa
 ababaaababa
+FIM
+
 
 CYK-Original
+`aabb` aceita? True: 190 interations [00:00, 326471.84 interations/s]
 `a` aceita? True: 0 interations [00:00, ? interations/s]      
-`aabb` aceita? True: 190 interations [00:00, 639580.87 interations/s]
-`bbbbbbb` aceita? False: 1064 interations [00:00, 1796593.98 interations/s]
-`aaaaabbbb` aceita? True: 2280 interations [00:00, 16198.48 interations/s]      
-`bbbaaa` aceita? True: 665 interations [00:00, 642527.57 interations/s]
-`ababaa` aceita? True: 665 interations [00:00, 150143.30 interations/s]
-`ababaaababa` aceita? True: 4180 interations [00:32, 130.04 interations/s]
+`bbbbbbb` aceita? False: 1064 interations [00:00, 968056.28 interations/s] 
+`aaaaabbbb` aceita? True: 2280 interations [00:00, 6159.23 interations/s]       
+`ababaa` aceita? True: 665 interations [00:00, 62184.25 interations/s]
+`ababaaababa` aceita? True: 4180 interations [01:22, 50.61 interations/s]         
 
+É 2NF? True
 2NF: 
+`aabb` aceita? True: 70 interations [00:00, 515089.96 interations/s]
 `a` aceita? True: 0 interations [00:00, ? interations/s]      
-`aabb` aceita? True: 70 interations [00:00, 778783.24 interations/s] 
-`bbbbbbb` aceita? False: 392 interations [00:00, 1217000.12 interations/s]
-`aaaaabbbb` aceita? True: 840 interations [00:00, 1302482.57 interations/s]
-`bbbaaa` aceita? False: 245 interations [00:00, 1200472.52 interations/s]
-`ababaa` aceita? True: 245 interations [00:00, 1155910.55 interations/s]
-`ababaaababa` aceita? True: 1540 interations [00:00, 1371677.25 interations/s]
+`bbbbbbb` aceita? False: 392 interations [00:00, 1139408.99 interations/s]
+`aaaaabbbb` aceita? True: 840 interations [00:00, 1123116.15 interations/s]
+`ababaa` aceita? True: 245 interations [00:00, 917504.00 interations/s] 
+`ababaaababa` aceita? True: 1540 interations [00:00, 1049086.92 interations/s]
 
-Tempo CYK: 32.39s
+Tempo CYK: 83.22s
 Tempo CYK-Modificado: 0.0s
