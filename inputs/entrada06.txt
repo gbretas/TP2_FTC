@@ -14,25 +14,35 @@ a
 aba
 FIM
 
+** Exemplo do artigo
 
 CYK-Original
-`a0+b` aceita? True: 410 interations [00:00, 536724.29 interations/s]
-`(a0+b)*a` aceita? True: 3444 interations [00:00, 941483.61 interations/s]
-`a+b*(a+b)` aceita? True: 4920 interations [00:00, 1098710.24 interations/s]
-`a+b*(a+b)` aceita? True: 4920 interations [00:00, 1088739.88 interations/s]
-`(a1+b)*a` aceita? True: 3444 interations [00:00, 1034236.63 interations/s]
+`a0+b` aceita? True: 410 interations [00:00, 1005651.84 interations/s]
+`(a0+b)*a` aceita? True: 3444 interations [00:00, 1406815.64 interations/s]
+`a+b*(a+b)` aceita? True: 4920 interations [00:00, 1548085.20 interations/s]
+`a+b*(a+b)` aceita? True: 4920 interations [00:00, 1367798.48 interations/s]
+`(a1+b)*a` aceita? True: 3444 interations [00:00, 1202562.69 interations/s]
 `a` aceita? True: 0 interations [00:00, ? interations/s]      
-`aba` aceita? False: 164 interations [00:00, 496654.05 interations/s]
+`aba` aceita? False: 164 interations [00:00, 349703.03 interations/s]
 
 É 2NF? True
 2NF: 
-`a0+b` aceita? True: 130 interations [00:00, 695484.08 interations/s]
-`(a0+b)*a` aceita? True: 1092 interations [00:00, 1078958.77 interations/s]
-`a+b*(a+b)` aceita? True: 1560 interations [00:00, 1108814.48 interations/s]
-`a+b*(a+b)` aceita? True: 1560 interations [00:00, 1112018.06 interations/s]
-`(a1+b)*a` aceita? True: 1092 interations [00:00, 1082273.15 interations/s]
+`a0+b` aceita? True: 130 interations [00:00, 849313.89 interations/s] 
+`(a0+b)*a` aceita? True: 1092 interations [00:00, 776564.93 interations/s]
+`a+b*(a+b)` aceita? True: 1560 interations [00:00, 1484372.56 interations/s]
+`a+b*(a+b)` aceita? True: 1560 interations [00:00, 1042727.37 interations/s]
+`(a1+b)*a` aceita? True: 1092 interations [00:00, 1067392.21 interations/s]
 `a` aceita? True: 0 interations [00:00, ? interations/s]      
-`aba` aceita? False: 52 interations [00:00, 481465.36 interations/s]
+`aba` aceita? False: 52 interations [00:00, 211340.90 interations/s]
 
-Tempo CYK: 0.02s
-Tempo CYK-Modificado: 0.01s
+==================================================
+Métricas de desempenho
+==================================================
+Tempo de conversão CNF: 0.81 ms
+Tempo de execução CYK: 30.69 ms
+
+Tempo de conversão 2NF: 0.05 ms
+Tempo de execução CYK-M: 6.72 ms
+
+Speedup da conversão do 2NF em relação a CNF: 16.2x
+Speedup da execução do CYK-M em relação CYK: 4.57x

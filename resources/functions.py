@@ -4,6 +4,7 @@ import os
 from resources.converts import convertToChomsky, convertTo2NF
 from resources.cyk import cyk
 from resources.cykm import cyk_for_2nf
+import time
 
 
 
@@ -103,18 +104,43 @@ def selectEntrada():
 
 # Função para executar o CYK-Original
 def teste_cyk(gramatica, entradas):
+
+    start_time = time.time()
     gramatica_chom = convertToChomsky(gramatica)
+    end_time = time.time()
+
+    # tempo_conversao_cyk in ms
+    tempo_conversao_cyk = (end_time - start_time) * 1000
+
     # print("Gramática em Chomsky: \n {}".format(gramatica_chom))
   
 
+    start_time = time.time()
     print("CYK-Original")
     for entrada in entradas:
         validacao = cyk(gramatica_chom, entrada)
     print("")
 
+    end_time = time.time()
+
+    # tempo_cyk in ms
+    tempo_execucao_cyk = (end_time - start_time) * 1000
+    
+    tempo_conversao_cyk = round(tempo_conversao_cyk, 2)
+    tempo_execucao_cyk = round(tempo_execucao_cyk, 2)
+
+
+    return tempo_conversao_cyk, tempo_execucao_cyk
+
 # Função para executar o CYK-modificado
 def teste_cyk_m(gramatica, entradas):
+
+    start_time = time.time()
     gramatica_2nf = convertTo2NF(gramatica)
+    end_time = time.time()
+
+    # tempo_conversao_cyk in ms
+    tempo_conversao_cyk_m = (end_time - start_time) * 1000
 
     # print("Gramática 2NF:\n {}".format(gramatica_2nf))
     #Conversão está correta
@@ -122,7 +148,18 @@ def teste_cyk_m(gramatica, entradas):
     # is in 2nf?
     print("É 2NF? {}".format(gramatica_2nf.is_2nf()))
 
+    start_time = time.time()
     print("2NF: ")
     for entrada in entradas:
         validacao = cyk_for_2nf(gramatica_2nf, entrada)
     print("")
+    end_time = time.time()
+
+    # tempo_cyk in ms
+    tempo_execucao_cyk_m = (end_time - start_time) * 1000
+
+    # tempo_conversao_cyk_m round 2
+    tempo_conversao_cyk_m = round(tempo_conversao_cyk_m, 2)
+    tempo_execucao_cyk_m = round(tempo_execucao_cyk_m, 2)
+
+    return tempo_conversao_cyk_m, tempo_execucao_cyk_m

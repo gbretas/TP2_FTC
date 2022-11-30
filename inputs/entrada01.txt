@@ -15,25 +15,34 @@ FIM
 Comentários:
 
 CYK-Original
-`()` aceita? True: 16 interations [00:00, 159783.01 interations/s]
-`()()` aceita? True: 160 interations [00:00, 953250.91 interations/s] 
-`abc` aceita? False: 64 interations [00:00, 818400.78 interations/s] 
+`()` aceita? True: 16 interations [00:00, 109655.01 interations/s]
+`()()` aceita? True: 160 interations [00:00, 864804.95 interations/s] 
+`abc` aceita? False: 64 interations [00:00, 712030.39 interations/s] 
 `a` aceita? False: 0 interations [00:00, ? interations/s]     
-`((())()()()[])` aceita? True: 7280 interations [00:00, 1441259.94 interations/s]
-`((())()()()[])((())()()()[])` aceita? True: 58464 interations [00:00, 1642623.67 interations/s]
-`()([])()((([])()[][][]()()()()))[]()()([]([]))` aceita? True: 259440 interations [00:11, 22455.88 interations/s]        
-`()([])()((([])()[][][]()()()()))[]()()([]([]))()([])()` aceita? True: 419760 interations [04:20, 1614.12 interations/s]         
+`((())()()()[])` aceita? True: 7280 interations [00:00, 1276100.51 interations/s]
+`((())()()()[])((())()()()[])` aceita? True: 58464 interations [00:00, 1733084.01 interations/s]
+`()([])()((([])()[][][]()()()()))[]()()([]([]))` aceita? True: 259440 interations [00:07, 34529.15 interations/s]        
+`()([])()((([])()[][][]()()()()))[]()()([]([]))()([])()` aceita? True: 419760 interations [02:44, 2558.24 interations/s]         
 
 É 2NF? True
 2NF: 
-`()` aceita? True: 7 interations [00:00, 93206.76 interations/s] 
-`()()` aceita? True: 70 interations [00:00, 770607.03 interations/s] 
-`abc` aceita? False: 28 interations [00:00, 517359.08 interations/s] 
+`()` aceita? True: 7 interations [00:00, 151340.87 interations/s]
+`()()` aceita? True: 70 interations [00:00, 1169726.22 interations/s]
+`abc` aceita? False: 28 interations [00:00, 757680.72 interations/s] 
 `a` aceita? False: 0 interations [00:00, ? interations/s]     
-`((())()()()[])` aceita? True: 3185 interations [00:00, 1689711.39 interations/s]
-`((())()()()[])((())()()()[])` aceita? True: 25578 interations [00:00, 1742721.05 interations/s]
-`()([])()((([])()[][][]()()()()))[]()()([]([]))` aceita? True: 113505 interations [00:00, 1814826.93 interations/s]
-`()([])()((([])()[][][]()()()()))[]()()([]([]))()([])()` aceita? True: 183645 interations [00:00, 1798482.22 interations/s]      
+`((())()()()[])` aceita? True: 3185 interations [00:00, 2478452.36 interations/s]
+`((())()()()[])((())()()()[])` aceita? True: 25578 interations [00:00, 1424650.85 interations/s]
+`()([])()((([])()[][][]()()()()))[]()()([]([]))` aceita? True: 113505 interations [00:00, 2352623.19 interations/s]
+`()([])()((([])()[][][]()()()()))[]()()([]([]))()([])()` aceita? True: 183645 interations [00:00, 2349150.50 interations/s]
 
-Tempo CYK: 272.06s
-Tempo CYK-Modificado: 0.18s
+==================================================
+Métricas de desempenho
+==================================================
+Tempo de conversão CNF: 0.4 ms
+Tempo de execução CYK: 171915.63 ms
+
+Tempo de conversão 2NF: 0.05 ms
+Tempo de execução CYK-M: 147.81 ms
+
+Speedup da conversão do 2NF em relação CNF: 8.0x
+Speedup da execução do CYK-M em relação CYK: 1163.09x

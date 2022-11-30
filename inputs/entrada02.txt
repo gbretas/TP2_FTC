@@ -14,27 +14,36 @@ ENTRADAS
 FIM
 
 CYK-Original
-`00` aceita? True: 17 interations [00:00, 111935.90 interations/s]
-`011` aceita? False: 68 interations [00:00, 389103.24 interations/s]
-`000` aceita? True: 68 interations [00:00, 402842.76 interations/s]
-`0000` aceita? True: 170 interations [00:00, 510402.06 interations/s]
-`00000` aceita? True: 340 interations [00:00, 556621.14 interations/s]
-`101101` aceita? True: 595 interations [00:00, 656049.13 interations/s]
-`101101101101101101101101101101101101101101` aceita? True: 209797 interations [00:00, 1639869.62 interations/s]      
-`101101101101101101101101101101101101101101101101101101101101` aceita? True: 611830 interations [00:00, 1848814.69 interations/s]      
-`101101101101101101111101101101101101101101101101101101101101` aceita? False: 611830 interations [00:00, 1985429.22 interations/s]     
+`00` aceita? True: 17 interations [00:00, 153011.09 interations/s]
+`011` aceita? False: 68 interations [00:00, 596679.23 interations/s]
+`000` aceita? True: 68 interations [00:00, 622735.09 interations/s]
+`0000` aceita? True: 170 interations [00:00, 790500.75 interations/s]
+`00000` aceita? True: 340 interations [00:00, 854954.05 interations/s]
+`101101` aceita? True: 595 interations [00:00, 1053444.86 interations/s]
+`101101101101101101101101101101101101101101` aceita? True: 209797 interations [00:00, 2131409.46 interations/s]
+`101101101101101101101101101101101101101101101101101101101101` aceita? True: 611830 interations [00:00, 2837496.94 interations/s]      
+`101101101101101101111101101101101101101101101101101101101101` aceita? False: 611830 interations [00:00, 3050291.41 interations/s]     
 
 É 2NF? True
 2NF: 
-`00` aceita? True: 7 interations [00:00, 127100.12 interations/s]
-`011` aceita? False: 28 interations [00:00, 481313.57 interations/s] 
-`000` aceita? True: 28 interations [00:00, 475467.66 interations/s] 
-`0000` aceita? True: 70 interations [00:00, 813299.94 interations/s] 
-`00000` aceita? True: 140 interations [00:00, 1120615.57 interations/s]
-`101101` aceita? True: 245 interations [00:00, 1346794.86 interations/s]
-`101101101101101101101101101101101101101101` aceita? True: 86387 interations [00:00, 1799609.32 interations/s]
-`101101101101101101101101101101101101101101101101101101101101` aceita? True: 251930 interations [00:00, 1930574.52 interations/s]      
-`101101101101101101111101101101101101101101101101101101101101` aceita? False: 251930 interations [00:00, 1930246.55 interations/s]     
+`00` aceita? True: 7 interations [00:00, 194437.93 interations/s]
+`011` aceita? False: 28 interations [00:00, 703236.60 interations/s] 
+`000` aceita? True: 28 interations [00:00, 738619.57 interations/s] 
+`0000` aceita? True: 70 interations [00:00, 1293397.71 interations/s]
+`00000` aceita? True: 140 interations [00:00, 1631118.22 interations/s]
+`101101` aceita? True: 245 interations [00:00, 2055208.96 interations/s]
+`101101101101101101101101101101101101101101` aceita? True: 86387 interations [00:00, 2873426.54 interations/s]
+`101101101101101101101101101101101101101101101101101101101101` aceita? True: 251930 interations [00:00, 2861730.27 interations/s]
+`101101101101101101111101101101101101101101101101101101101101` aceita? False: 251930 interations [00:00, 2919335.52 interations/s]
 
-Tempo CYK: 0.8s
-Tempo CYK-Modificado: 0.31s
+==================================================
+Métricas de desempenho
+==================================================
+Tempo de conversão CNF: 0.27 ms
+Tempo de execução CYK: 538.38 ms
+
+Tempo de conversão 2NF: 0.03 ms
+Tempo de execução CYK-M: 207.03 ms
+
+Speedup da conversão do 2NF em relação a CNF: 9.0x
+Speedup da execução do CYK-M em relação CYK: 2.6x

@@ -14,19 +14,30 @@ def executar(entrada):
     # grammarInput, entradas = ler_entrada("inputs/entrada01.txt")
 
     print("")
-    start_time_cyk = time.time()
-    teste_cyk(grammarInput, entradas)
-    end_time_cyk = time.time()
+    tempo_conversao_cyk, tempo_execucao_cyk = teste_cyk(grammarInput, entradas)
 
-    start_time_cyk_m = time.time()
-    teste_cyk_m(grammarInput, entradas)
-    end_time_cyk_m = time.time()
+    tempo_conversao_cyk_m, tempo_execucao_cyk_m = teste_cyk_m(grammarInput, entradas)
 
-    time_cyk = round(end_time_cyk - start_time_cyk, 2)
-    time_cyk_m = round(end_time_cyk_m - start_time_cyk_m, 2)
 
-    print("Tempo CYK: {}s".format(time_cyk))
-    print("Tempo CYK-Modificado: {}s".format(time_cyk_m))
+    print("="*50)
+    print("Métricas de desempenho")
+    print("="*50)
+
+    print("Tempo de conversão CNF: {} ms".format(tempo_conversao_cyk))
+    print("Tempo de execução CYK: {} ms".format(tempo_execucao_cyk))
+
+    print("")
+
+    print("Tempo de conversão 2NF: {} ms".format(tempo_conversao_cyk_m))
+    print("Tempo de execução CYK-M: {} ms".format(tempo_execucao_cyk_m))
+
+    print("")
+
+    speedupConversion = round((tempo_conversao_cyk) / tempo_conversao_cyk_m, 2)
+    speedupExecution = round((tempo_execucao_cyk) / tempo_execucao_cyk_m, 2)
+
+    print("Speedup da conversão do 2NF em relação a CNF: {}x".format(speedupConversion))
+    print("Speedup da execução do CYK-M em relação CYK: {}x".format(speedupExecution))
 
 
 def menu():
@@ -37,29 +48,6 @@ def menu():
         exit()
 
     executar(selecionarEntrada)
-
-    while True:
-        print()
-        print("Deseja executar outro arquivo de entrada?")
-        print("1. Sim")
-        print("2. Não")
-        opcao = int(input("Opção: "))
-
-        if opcao == 1:
-            selecionarEntrada = selectEntrada()
-            if selecionarEntrada == None:
-                print("Saindo...")
-                exit()
-
-            executar(selecionarEntrada)
-        elif opcao == 2:
-            print("Saindo...")
-            exit()
-        else:
-            print("Opção inválida")
-
-
-
 
     pass
 

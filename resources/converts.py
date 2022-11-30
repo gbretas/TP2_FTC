@@ -16,6 +16,7 @@ def getNextAlphabet(gram):
         nextAlpha = chr(ord('A') + random.randint(0, 25))
 
     return nextAlpha
+
 # Converter uma grámatica para a forma normal de Chomsky.
 def convertToChomsky(gram):
     if gram.is_chomsky():

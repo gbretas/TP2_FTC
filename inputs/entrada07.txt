@@ -8,18 +8,29 @@ ENTRADAS
 ()[[()]]
 FIM
 
+
 CYK-Original
-`()` aceita? True: 16 interations [00:00, 166937.47 interations/s]
-`()()()` aceita? True: 560 interations [00:00, 1070560.73 interations/s]
-`()()[][]` aceita? True: 1344 interations [00:00, 1137208.91 interations/s]
-`()[[()]]` aceita? True: 1344 interations [00:00, 1225199.86 interations/s]
+`()` aceita? True: 16 interations [00:00, 135573.46 interations/s]
+`()()()` aceita? True: 560 interations [00:00, 1099630.26 interations/s]
+`()()[][]` aceita? True: 1344 interations [00:00, 1067438.85 interations/s]
+`()[[()]]` aceita? True: 1344 interations [00:00, 1356060.76 interations/s]
 
 É 2NF? True
 2NF: 
-`()` aceita? True: 7 interations [00:00, 123361.88 interations/s]
-`()()()` aceita? True: 245 interations [00:00, 1012418.21 interations/s]
-`()()[][]` aceita? True: 588 interations [00:00, 1152992.40 interations/s]
-`()[[()]]` aceita? True: 588 interations [00:00, 1190275.46 interations/s]
+`()` aceita? True: 7 interations [00:00, 132252.83 interations/s]
+`()()()` aceita? True: 245 interations [00:00, 1079416.47 interations/s]
+`()()[][]` aceita? True: 588 interations [00:00, 1286515.78 interations/s]
+`()[[()]]` aceita? True: 588 interations [00:00, 1246210.59 interations/s]
 
-Tempo CYK: 0.0s
-Tempo CYK-Modificado: 0.0s
+==================================================
+Métricas de desempenho
+==================================================
+Tempo de conversão CNF: 0.4 ms
+Tempo de execução CYK: 23.96 ms
+
+Tempo de conversão 2NF: 0.04 ms
+Tempo de execução CYK-M: 1.68 ms
+
+Speedup da conversão do 2NF em relação a CNF: 10.0x
+Speedup da execução do CYK-M em relação CYK: 14.26x
+

@@ -12,23 +12,31 @@ ababaa
 ababaaababa
 FIM
 
-
 CYK-Original
-`aabb` aceita? True: 190 interations [00:00, 326471.84 interations/s]
+`aabb` aceita? True: 190 interations [00:00, 477196.26 interations/s]
 `a` aceita? True: 0 interations [00:00, ? interations/s]      
-`bbbbbbb` aceita? False: 1064 interations [00:00, 968056.28 interations/s] 
-`aaaaabbbb` aceita? True: 2280 interations [00:00, 6159.23 interations/s]       
-`ababaa` aceita? True: 665 interations [00:00, 62184.25 interations/s]
-`ababaaababa` aceita? True: 4180 interations [01:22, 50.61 interations/s]         
+`bbbbbbb` aceita? False: 1064 interations [00:00, 1484116.88 interations/s]
+`aaaaabbbb` aceita? True: 2280 interations [00:00, 14619.42 interations/s]      
+`ababaa` aceita? True: 665 interations [00:00, 147421.36 interations/s]
+`ababaaababa` aceita? True: 4180 interations [00:32, 127.36 interations/s]        
 
 É 2NF? True
 2NF: 
-`aabb` aceita? True: 70 interations [00:00, 515089.96 interations/s]
+`aabb` aceita? True: 70 interations [00:00, 947100.90 interations/s] 
 `a` aceita? True: 0 interations [00:00, ? interations/s]      
-`bbbbbbb` aceita? False: 392 interations [00:00, 1139408.99 interations/s]
-`aaaaabbbb` aceita? True: 840 interations [00:00, 1123116.15 interations/s]
-`ababaa` aceita? True: 245 interations [00:00, 917504.00 interations/s] 
-`ababaaababa` aceita? True: 1540 interations [00:00, 1049086.92 interations/s]
+`bbbbbbb` aceita? False: 392 interations [00:00, 2267816.78 interations/s]
+`aaaaabbbb` aceita? True: 840 interations [00:00, 2239806.33 interations/s]
+`ababaa` aceita? True: 245 interations [00:00, 1854881.73 interations/s]
+`ababaaababa` aceita? True: 1540 interations [00:00, 2015359.80 interations/s]
 
-Tempo CYK: 83.22s
-Tempo CYK-Modificado: 0.0s
+==================================================
+Métricas de desempenho
+==================================================
+Tempo de conversão CNF: 0.18 ms
+Tempo de execução CYK: 33099.77 ms
+
+Tempo de conversão 2NF: 0.03 ms
+Tempo de execução CYK-M: 2.16 ms
+
+Speedup da conversão do 2NF em relação a CNF: 6.0x
+Speedup da execução do CYK-M em relação CYK: 15323.97x

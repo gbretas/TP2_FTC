@@ -22,35 +22,44 @@ ENTRADAS
 FIM
 
 CYK-Original
-`01` aceita? False: 16 interations [00:00, 99420.54 interations/s] 
-`00` aceita? True: 16 interations [00:00, 160164.35 interations/s]
-`000111` aceita? False: 560 interations [00:00, 601487.90 interations/s]
-`00111` aceita? False: 320 interations [00:00, 516023.56 interations/s]
-`0111` aceita? False: 160 interations [00:00, 631910.21 interations/s]
-`00` aceita? True: 16 interations [00:00, 185897.13 interations/s]
-`001` aceita? True: 64 interations [00:00, 369745.81 interations/s]
-`000011` aceita? False: 560 interations [00:00, 506318.22 interations/s]
-`0010` aceita? True: 160 interations [00:00, 557382.59 interations/s]
-`00101` aceita? True: 320 interations [00:00, 596788.47 interations/s]
-`001010010100101` aceita? True: 8960 interations [00:00, 608697.18 interations/s]
-`00101001010010100000` aceita? True: 21280 interations [00:00, 677424.85 interations/s]
-`001010010100101000010` aceita? True: 24640 interations [00:00, 687613.69 interations/s]
+`01` aceita? False: 16 interations [00:00, 202745.81 interations/s]
+`00` aceita? True: 16 interations [00:00, 372827.02 interations/s]
+`000111` aceita? False: 560 interations [00:00, 1407315.90 interations/s]
+`00111` aceita? False: 320 interations [00:00, 1494629.49 interations/s]
+`0111` aceita? False: 160 interations [00:00, 1468465.30 interations/s]
+`00` aceita? True: 16 interations [00:00, 432960.41 interations/s]
+`001` aceita? True: 64 interations [00:00, 184365.01 interations/s] 
+`000011` aceita? False: 560 interations [00:00, 883343.45 interations/s]
+`0010` aceita? True: 160 interations [00:00, 495634.15 interations/s]
+`00101` aceita? True: 320 interations [00:00, 646520.85 interations/s]
+`001010010100101` aceita? True: 8960 interations [00:00, 661729.89 interations/s]
+`00101001010010100000` aceita? True: 21280 interations [00:00, 654951.23 interations/s]
+`001010010100101000010` aceita? True: 24640 interations [00:00, 931387.16 interations/s]
 
 É 2NF? True
 2NF: 
-`01` aceita? False: 10 interations [00:00, 161319.38 interations/s]
-`00` aceita? True: 10 interations [00:00, 185588.67 interations/s]
-`000111` aceita? False: 350 interations [00:00, 961996.33 interations/s] 
-`00111` aceita? False: 200 interations [00:00, 1205259.77 interations/s]
-`0111` aceita? False: 100 interations [00:00, 1023000.98 interations/s]
-`00` aceita? True: 10 interations [00:00, 226719.14 interations/s]
-`001` aceita? True: 40 interations [00:00, 572601.23 interations/s] 
-`000011` aceita? False: 350 interations [00:00, 1235695.62 interations/s]
-`0010` aceita? True: 100 interations [00:00, 917790.81 interations/s] 
-`00101` aceita? True: 200 interations [00:00, 1118481.07 interations/s]
-`001010010100101` aceita? True: 5600 interations [00:00, 1552932.39 interations/s]
-`00101001010010100000` aceita? True: 13300 interations [00:00, 1592243.28 interations/s]
-`001010010100101000010` aceita? True: 15400 interations [00:00, 1572698.05 interations/s]
+`01` aceita? False: 10 interations [00:00, 285326.80 interations/s]
+`00` aceita? True: 10 interations [00:00, 223101.28 interations/s]
+`000111` aceita? False: 350 interations [00:00, 2024836.41 interations/s]
+`00111` aceita? False: 200 interations [00:00, 1815716.02 interations/s]
+`0111` aceita? False: 100 interations [00:00, 1588751.52 interations/s]
+`00` aceita? True: 10 interations [00:00, 358487.52 interations/s] 
+`001` aceita? True: 40 interations [00:00, 869285.80 interations/s] 
+`000011` aceita? False: 350 interations [00:00, 1921474.35 interations/s]
+`0010` aceita? True: 100 interations [00:00, 1388842.38 interations/s]
+`00101` aceita? True: 200 interations [00:00, 1694668.28 interations/s]
+`001010010100101` aceita? True: 5600 interations [00:00, 2412004.76 interations/s]
+`00101001010010100000` aceita? True: 13300 interations [00:00, 2444854.42 interations/s]
+`001010010100101000010` aceita? True: 15400 interations [00:00, 2452623.09 interations/s]
 
-Tempo CYK: 0.11s
-Tempo CYK-Modificado: 0.02s
+==================================================
+Métricas de desempenho
+==================================================
+Tempo de conversão CNF: 0.28 ms
+Tempo de execução CYK: 93.56 ms
+
+Tempo de conversão 2NF: 0.01 ms
+Tempo de execução CYK-M: 16.06 ms
+
+Speedup da conversão do 2NF em relação a CNF: 28.0x
+Speedup da execução do CYK-M em relação CYK: 5.83x
