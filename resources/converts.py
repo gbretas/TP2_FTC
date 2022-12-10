@@ -1,15 +1,18 @@
+# Fundamentos Teóricos da Computação
+# Trabalho Prático 2
+# Implementação do algoritmo CYK e CYK-M
+# Gustavo Torres Bretas Alves - 689655
+# Maria Fernanda Oliveira Guimarães - 690667
+
 from itertools import product
 from resources.grammar import Grammar
-
-# Função para gerar combinações possíveis de trocas.
-def filler(word, from_char, to_char):
-    options = [(c,) if c != from_char else (from_char, to_char) for c in word]
-    return (''.join(o) for o in product(*options))
-
 import random
 debug = False
-# Função que pega a próxima letra do alfabeto.
+
 def getNextAlphabet(gram):
+    """
+    Retorna o próximo caractere alfabético que não esteja sendo usado.
+    """
     nextAlpha = chr(ord('A') + len(gram.variables))
     while nextAlpha in gram.variables:
         # get random alpha from A-Z
@@ -17,16 +20,29 @@ def getNextAlphabet(gram):
 
     return nextAlpha
 
-# Converter uma grámatica para a forma normal de Chomsky.
+def substituicoes(word, from_char, to_char):
+    """
+    Gerar todas as palavras possíveis com todas substituições de um caractere por outro.
+    """
+    options = [(c,) if c != from_char else (from_char, to_char) for c in word]
+    return (''.join(o) for o in product(*options))
+
 def convertToChomsky(gram):
+    """
+    Converte uma gramática para a forma normal de Chomsky.
+    Usando o método apresentado em slides da disciplina.
+    """
+
     if gram.is_chomsky():
+        # Se já estiver na forma normal de Chomsky, retorna a própria gramática
         return gram
 
+    # 0. Criar nova gramática
     new_gram = Grammar()
     new_gram.variables = gram.variables
     new_gram.terminals = gram.terminals
     
-    # 1 Introduzir nova variável de partida
+    # 1. Introduzir nova variável de partida
     if debug:
         print("1. Introduzir nova variável de partida")
     new_gram.start = getNextAlphabet(new_gram)
@@ -35,7 +51,7 @@ def convertToChomsky(gram):
     new_gram.add_variable(new_gram.start)
     new_gram.add_rule([new_gram.start, gram.start])
 
-    # copy all rules
+    # Copiar todas as regras
     for rule in gram.rules_dict:
         for rul in gram.rules_dict[rule]:
             new_gram.add_rule([rule, rul])
@@ -43,23 +59,23 @@ def convertToChomsky(gram):
 
 
     # 2 Remover λ-produções
-    # while gram.have_lambda():
     if debug:
         print("2. Removendo λ-produções\n")
-    # for range
-    removeds = []
-    while new_gram.have_lambda():
+
+    removeds = [] # Lista de regras removidas
+    # Enquanto tiver regras lambda
+    while new_gram.have_lambda(): 
     
         for rule in new_gram.rules_dict: # Para cada Variavel
             for rul in new_gram.rules_dict[rule]: # Para cada regra da variavel
+
+                # Se a regra for lambda
                 if rul == "λ":
-                    # Remover as regras
                     if debug:
                         print("Removendo regra: {} -> {}".format(rule, rul))
 
-
                     try:
-                        # if is start
+                        # Se a variavel não for a variavel inicial
                         if rule != new_gram.start:
                             new_gram.rules_dict[rule].remove(rul)
                             removeds.append([rule, rul])
@@ -70,7 +86,7 @@ def convertToChomsky(gram):
                     for rule2 in new_gram.rules_dict:
                         for rul2 in new_gram.rules_dict[rule2]:
 
-                            # ocurrencies of rule in rul2
+                            # Ocorrencias de rule em rul2
                             ocurrencies = 0
                             for symbol in rul2:
                                 
@@ -90,13 +106,8 @@ def convertToChomsky(gram):
                                             print("     Adicionando regra: {} -> {}".format(rule2, changed))
                                         new_gram.add_rule([rule2, changed])
                             elif ocurrencies > 1:
-                                # Combinações = occurencies + 1
-                                # print("     Maior")
-                                # print("     Occurrencies of {} in {} is {}".format(rule, rul2, ocurrencies))
-                                # new_gram.add_rule([rule2, rul2])
 
-                                # all possible combinations to replace rule to λ in rul2
-                                combinations = list(filler(rul2, rule, "λ"))
+                                combinations = list(substituicoes(rul2, rule, "λ"))
                                 for combination in combinations:
                                     if combination != "λ":
                                         combination = combination.replace("λ", "")
@@ -104,16 +115,15 @@ def convertToChomsky(gram):
                                         if debug:
                                             print("     Adicionando regra: {} -> {}".format(rule2, combination))
                                         new_gram.add_rule([rule2, combination])
-
-                                
-
                     
                     if debug:
                         print("\n")
                     pass
+    
     if debug:
         print("Regras removidas: {}\n".format(removeds))
-    # 3 Remover produções unitárias
+    
+    # 3. Remover produções unitárias
     if debug:
         print("3. Removendo produções unitárias de variáveis\n")
 
@@ -125,6 +135,7 @@ def convertToChomsky(gram):
                 pass
 
 
+    # Enquanto tiver produções unitárias
     while new_gram.have_unitary():
         for rule in new_gram.rules_dict:
             for rul in new_gram.rules_dict[rule]:
@@ -135,7 +146,7 @@ def convertToChomsky(gram):
                     # Rule -> rul
                     new_gram.rules_dict[rule].remove(rul)
                     removeds.append([rule, rul])
-                    # adicionar todas as regras do rul para o rule
+                    # Adicionar todas as regras do rul para o rule
                     if debug:
                         print("Adicionando regras: ")
                     for rule2 in new_gram.rules_dict:
@@ -148,23 +159,22 @@ def convertToChomsky(gram):
 
     if debug:
         print("")
-    # 4 Converte regras remanescentes
 
+    # 4. Converte regras remanescentes
     if debug:
         print("4. Converte regras remanescentes\n")
     loop = 0
-    while not new_gram.is_chomsky():
-    # for loop in range(1):
 
+    # Enquanto não estiver na forma normal de Chomsky
+    # Execute a remoção de regras remanescentes até que a gramática esteja na forma normal de Chomsky
+    # Se entrar em loop, para
+    while not new_gram.is_chomsky():
         loop += 1
 
         if loop > 100:
             print("Erro ao converter para Chomsky")
             break
-    # for i in range(0, 0):
 
-
-        # Tratamos os vt OU tv
         for rule in list(new_gram.rules_dict):
             for rul in new_gram.rules_dict[rule]:
                 if len(rul) == 2:
@@ -196,13 +206,13 @@ def convertToChomsky(gram):
                         if gerador:
                             if debug:
                                 print("Removendo regra: {} -> {}".format(rule, rul))
-                            # replace terminal to gerador in rule
+                            # Alterar regra, removendo a regra antiga e adicionando a nova
                             new_gram.rules_dict[rule].remove(rul)
                             rulTmp = rul.replace(terminalTmp, gerador)
 
                             new_gram.add_rule([rule, rulTmp])
 
-        # tratar os tt
+        # Tratar as regras que geram duas terminais
         for rule in list(new_gram.rules_dict):
             for rul in new_gram.rules_dict[rule]:
                 if len(rul) == 2:
@@ -266,7 +276,7 @@ def convertToChomsky(gram):
         if debug:  
             print("\n4.2")
 
-        # print(new_gram)
+        # Tratar regras de 2 variáveis ou mais (remover regras de 3 variáveis ou mais)
         for rule in list(new_gram.rules_dict):
             for rul in new_gram.rules_dict[rule]:
                 if len(rul) > 2:
@@ -296,15 +306,11 @@ def convertToChomsky(gram):
                     if gerador:
                         if debug:
                             print("Removendo regra: {} -> {}".format(rule, rul))
-                        # replace terminal to gerador in rule
+                        # Alterar regra, removendo a regra antiga e adicionando a nova
                         new_gram.rules_dict[rule].remove(rul)
                         rulTmp = rul.replace(twoFirst, gerador)
 
-                        new_gram.add_rule([rule, rulTmp])
-
-        removed_vars = []    
-
-            
+                        new_gram.add_rule([rule, rulTmp])          
 
 
     if debug:
@@ -315,35 +321,50 @@ def convertToChomsky(gram):
 
     return new_gram
 
-# Converter gramática para 2NF
 def convertTo2NF(gram):
+    """
+    Converte gramática para 2NF
+    """
+
     if gram.is_2nf():
+        # Se já está em 2NF, não precisa converter
         return gram
 
     new_gram = gram.copy()
     loop = 0
+
+    # Enquanto não estiver em 2NF
+    # Se encontrar um loop, então pare
     while not new_gram.is_2nf():
         loop += 1
         if loop > 100:
             print("Erro ao converter para 2NF")
             break
-        for rule in list(new_gram.rules_dict):
-            for rul in new_gram.rules_dict[rule]:
-                if len(rul) > 2:
-                    if debug:
-                        print("Removendo regra: {} -> {}".format(rule, rul))
 
-                    twoFirst = rul[:2]
-                    gerador = False
-                    for rule2 in new_gram.rules_dict:
-                        rulesInRule2 = len(new_gram.rules_dict[rule2])
+
+        for rule in list(new_gram.rules_dict):      # Para cada regra
+            for rul in new_gram.rules_dict[rule]:   # Para cada produção da regra
+
+                # Se a produção tiver mais de 2 símbolos
+                if len(rul) > 2: 
+
+                    twoFirst = rul[:2] # Pegar os dois primeiros símbolos
+                    gerador = False    # Variável geradora
+
+                    for rule2 in new_gram.rules_dict:                   # Para cada regra
+                        
+                        rulesInRule2 = len(new_gram.rules_dict[rule2])  # Quantas produções tem na regra
                         if rulesInRule2 == 1:
+                            # Se a regra tiver apenas uma produção
                             if new_gram.rules_dict[rule2][0] == twoFirst:
+                                # Se a produção for igual aos dois primeiros símbolos
                                 gerador = rule2
                                 break
                     
+                    
                     if not gerador:
-                        gerador = getNextAlphabet(new_gram)
+                        # Se não encontrou uma variável geradora
+                        gerador = getNextAlphabet(new_gram) # Pegar a próxima letra do alfabeto
     
                         new_gram.add_variable(gerador)
                         new_gram.add_rule([gerador, twoFirst])

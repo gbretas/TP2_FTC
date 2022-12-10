@@ -1,21 +1,25 @@
-# Gustavo Torres Bretas Alves
-# Maria Fernanda Oliveira Guimarães
+# Fundamentos Teóricos da Computação
+# Trabalho Prático 2
+# Implementação do algoritmo CYK e CYK-M
+# Gustavo Torres Bretas Alves - 689655
+# Maria Fernanda Oliveira Guimarães - 690667
 
+# Códigos de referência
 # https://www.informaticadidactica.de/index.php?page=LangeLeiss2009_en
+# https://github.com/Kymberlly/CYK_Modificado/blob/master/src/cyk/Classes/CYK_MOD.java
+# https://github.com/nikoladimitroff/CfgSolver/blob/master/cfgSolver.js
 
-import os
-import time
 from resources.functions import *
-
 debug = False
 
 def executar(entrada):
     grammarInput, entradas = ler_entrada(entrada)
-    # grammarInput, entradas = ler_entrada("inputs/entrada01.txt")
 
     print("")
+    """
+    Rodar os testes, retornando o tempo de conversão e execução
+    """
     tempo_conversao_cyk, tempo_execucao_cyk = teste_cyk(grammarInput, entradas)
-
     tempo_conversao_cyk_m, tempo_execucao_cyk_m = teste_cyk_m(grammarInput, entradas)
 
 
@@ -40,25 +44,18 @@ def executar(entrada):
     print("Speedup da execução do CYK-M em relação CYK: {}x".format(speedupExecution))
 
 
-def menu():
-
-    selecionarEntrada = selectEntrada()
-    if selecionarEntrada == None:
-        print("Saindo...")
-        exit()
-
-    executar(selecionarEntrada)
-
-    pass
-
-
 if __name__ == "__main__":
     try:
-        menu()
+        # Abrir uma entrada
+        selecionarEntrada = selectEntrada()
+        if selecionarEntrada == None:
+            print("Saindo...")
+            exit()
+
+        executar(selecionarEntrada)
     except KeyboardInterrupt:
         print("\nSaindo...")
         exit()
     except Exception as e:
         print("\nErro: {}".format(e))
         exit()
-# print("O tempo inclui a conversão da gramática para Chomsky/2NF, e a execução do algoritmo CYK/CYK-Modificado")

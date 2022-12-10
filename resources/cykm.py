@@ -1,9 +1,7 @@
-from tqdm import tqdm
-
-class Preprocessador:
+from tqdm import tqdm   
+class CYKM:
     def __init__(self, gram):
         self.gram = gram
-
 
     # input: a CFG G = (N,Σ,S,→) in 2NF
     # Nullable(G) =
@@ -26,42 +24,46 @@ class Preprocessador:
     # 17          nullable : = nullable ∪{A}
     # 18          todo : = todo ∪{A}
     # 19    return nullable
+
     def nullable(self):
+        """
+        Retorna uma lista com os não terminais que podem gerar a cadeia vazia
+        """
         nullable = []
-        occurs = {}
+        ocorrencias = {}
 
-        for nonterminal in self.gram.rules_dict:
-            occurs[nonterminal] = []
+        for rules in self.gram.rules_dict:
+            ocorrencias[rules] = []
 
-        for nonterminal in self.gram.rules_dict:
-            for ruls in self.gram.rules_dict[nonterminal]:
-                if len(ruls) == 1 and ruls in self.gram.rules_dict:
-                    occurs[ruls].append(nonterminal)
+        for rules in self.gram.rules_dict:
+            for rul in self.gram.rules_dict[rules]:
+                if len(rul) == 1 and rul in self.gram.rules_dict:
+                    ocorrencias[rul].append(rules)
 
-        for nonterminal in self.gram.rules_dict:
-            for ruls in self.gram.rules_dict[nonterminal]:
-                if len(ruls) == 2 and ruls[0] in self.gram.rules_dict and ruls[1] in self.gram.rules_dict:
-                    occurs[ruls[0]].append(nonterminal + ruls[1])
-                    occurs[ruls[1]].append(nonterminal + ruls[0])
+        for rules in self.gram.rules_dict:
+            for rul in self.gram.rules_dict[rules]:
+                if len(rul) == 2 and rul[0] in self.gram.rules_dict and rul[1] in self.gram.rules_dict:
+                    ocorrencias[rul[0]].append(rules + rul[1])
+                    ocorrencias[rul[1]].append(rules + rul[0])
 
         todo = []
         nullable = []
-        for nonterminal in self.gram.rules_dict:
-            if "λ" in self.gram.rules_dict[nonterminal]:
-                nullable.append(nonterminal)
-                todo.append(nonterminal)
+        for rules in self.gram.rules_dict:
+            if "λ" in self.gram.rules_dict[rules]:
+                nullable.append(rules)
+                todo.append(rules)
 
         while len(todo) != 0:
             B = todo.pop()
-            for i in range(len(occurs[B])):
-                if len(occurs[B][i]) == 1:
+            for i in range(len(ocorrencias[B])):
+                if len(ocorrencias[B][i]) == 1:
                     continue
-                A = occurs[B][i][0]
-                C = occurs[B][i][1]
+                A = ocorrencias[B][i][0]
+                C = ocorrencias[B][i][1]
 
-                shouldSkip = C not in nullable or A in nullable
+                skip = C not in nullable or A in nullable
 
-                if shouldSkip:
+                if skip:
                     continue
 
                 nullable.append(A)
@@ -70,9 +72,8 @@ class Preprocessador:
         return nullable
 
     # ÛG*(M) : = { x | ∃y ∈ M, (y,x) ∈ ÛG*}.
-    def inverseUnitGraph(self):
+    def grafoUnitarioReverso(self):
         nullableSet = self.nullable()
-        nonterminals = self.gram.rules_dict.keys()
 
         graph = {}
         addEdge = lambda left, right: graph.setdefault(left, []).append(right)
@@ -89,37 +90,49 @@ class Preprocessador:
                         addEdge(word[0], nonterminal)
 
         return graph
-		
-    
-class Reconhecedor:
+
     def dfs(self, graph, root):
+        """
+        Retorna uma lista com os nós visitados em uma busca em profundidade
+        """
         if root not in graph:
             return [root]
 
-        visited = [root]
+        visitados = [root]
         todo = []
         for i in range(len(graph[root])):
             todo.append(graph[root][i])
-            visited.append(graph[root][i])
+            visitados.append(graph[root][i])
 
         while len(todo) != 0:
             next = todo.pop()
             if next in graph:
                 for edge in graph[next]:
-                    # print(edge)
-                    # print(graph["F"])
-                    # print("graph[{}][{}]".format(next, edge))
-                    # vertex = graph[next][0]
                     if graph[next][0] == edge:
                         vertex = graph[next][0]
                     else:
                         vertex = graph[next][1]
 
-                    if vertex not in visited:
+                    if vertex not in visitados:
                         todo.append(vertex)
-                        visited.append(vertex)
+                        visitados.append(vertex)
 
-        return visited
+        return visitados
+
+
+
+    def alcancavel(self, graph, set):
+        """
+        Retorna uma lista com os nós alcançáveis a partir de um conjunto de nós
+        """
+        alcancaveis = []
+        for node in set:
+            visited = self.dfs(graph, node)
+            for i in range(len(visited)):
+                if visited[i] not in alcancaveis:
+                    alcancaveis.append(visited[i])
+
+        return alcancaveis
 
 
     # input:	a CFG G = (N,Σ,S,→) in 2NF, its graph (V,ÛG),a word w = a1...an ∈ Σ+
@@ -135,29 +148,21 @@ class Reconhecedor:
     #  	9              T' i,j : = T' i,j ∪{ A }
     #  	10        Ti,j : = Û*G(T' i,j)
     #  	11    if S ∈ T1,n then return yes else return no
-    def alcancavel(self, graph, set):
-        reachable = []
-        for node in set:
-            visited = self.dfs(graph, node)
-            for i in range(len(visited)):
-                if visited[i] not in reachable:
-                    reachable.append(visited[i])
-
-        return reachable
-
-   
-    def testarEntrada(self, grammar, graph, startSymbol, word):
+    def montarTabela(self, grammar, graph, startSymbol, word):
+        """
+        Retorna True se a palavra é aceita pela gramática, False caso contrário
+        """
         if len(word) == 0:
             return False
 
         table = []
-        tablePrime = []
+        table2 = []
         for i in range(len(word)):
             table.append([])
-            tablePrime.append([])
+            table2.append([])
             for j in range(len(word)):
                 table[i].append([])
-                tablePrime[i].append([])
+                table2[i].append([])
 
         for i in range(len(word)):
             table[i][i] = self.alcancavel(graph, [word[i]])
@@ -167,7 +172,7 @@ class Reconhecedor:
 
         for j in range(1, len(word)):
             for i in range(j - 1, -1, -1):
-                tablePrime[i][j] = []
+                table2[i][j] = []
                 for h in range(i, j):
                     for nonterminal in grammar:
                         for rhs in grammar[nonterminal]:
@@ -176,8 +181,8 @@ class Reconhecedor:
                             rule = rhs
                             condition = len(rule) == 2 and rule[0] in table[i][h] and rule[1] in table[h + 1][j]
                             if condition:
-                                tablePrime[i][j].append(nonterminal)
-                table[i][j] = self.alcancavel(graph, tablePrime[i][j])
+                                table2[i][j].append(nonterminal)
+                table[i][j] = self.alcancavel(graph, table2[i][j])
                 
         tqdmProgress.set_description_str("`{}` aceita? {}".format(word, startSymbol in table[0][len(word)-1]))
         tqdmProgress.close()
@@ -186,32 +191,18 @@ class Reconhecedor:
 
 
 def cyk_for_2nf(gram, word):
+    """
+    Retorna True se a palavra é aceita pela gramática, False caso contrário
+    """
     n = len(word)
     if n == 0:
         word = "λ"
         n = 1
-        
-    preprocess = Preprocessador(gram)
-    inverseUnitGraph = preprocess.inverseUnitGraph()
 
-    reconhecedor = Reconhecedor()
-    reconhece = reconhecedor.testarEntrada(gram.rules_dict, inverseUnitGraph, gram.start, word)
+
+    cykm = CYKM(gram)
+        
+    grafoUnitarioReverso = cykm.grafoUnitarioReverso()
+    reconhece = cykm.montarTabela(gram.rules_dict, grafoUnitarioReverso, gram.start, word)
 
     return reconhece
-    # print(inverseUnitGraph)
-
-
-    # Build a tree based in  To CNF or not to CNF? of Lange and Leiss
-    # https://www.informaticadidactica.de/index.php?page=LangeLeiss2009_en
-    # https://www.informaticadidactica.de/index.php?page=LangeLeiss2009_en#To_CNF_or_not_to_CNF.3F
-
-    # // Preprocess the grammar
-    # var preprocessed = CfgSolver.preprocess(grammar);
-    # // Use the preprocessed grammar to validate strings
-    # var word = "yourtextgoeshere";
-    # var isValid = CfgSolver.recognizeWord(grammar, word);
-
-
-
-
-    return

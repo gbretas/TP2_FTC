@@ -1,8 +1,13 @@
+# Fundamentos Teóricos da Computação
+# Trabalho Prático 2
+# Implementação do algoritmo CYK e CYK-M
+# Gustavo Torres Bretas Alves - 689655
+# Maria Fernanda Oliveira Guimarães - 690667
+
+
 from tqdm import tqdm
 
-
 # CYK Original
-
 # input: a CFG G = (N,Σ,S,→) in CNF, a word w = a1...an ∈ Σ+
  
 # CYK(G,w) =
@@ -17,8 +22,6 @@ from tqdm import tqdm
 # 9                       Ti,j : = Ti,j ∪{ A }
  
 # 10    if S ∈ T1,n then return yes else return no
- 
-
 # Figure 1: Algorithm CYK for the word problem of CFGs in CNF.
 
 
