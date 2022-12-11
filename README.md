@@ -7,7 +7,7 @@ Trabalho desenvolvido em **Python** para a disciplina de Teoria da Computação,
 ## Alunos
 
 Gustavo Torres Bretas Alves - 689655 \
-Maria Fernanda Oliveira Guimarães - 690667Print2022-11-30 at 12.18.17@2x.jpg
+Maria Fernanda Oliveira Guimarães - 690667
 
 ------
 ## Execução
